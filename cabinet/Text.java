@@ -8,12 +8,16 @@ public class Text
 	private		String		publisher;
 	private		Integer		year;
 	
+	private		String		filepath;
+	
 	/* Constructors */
 	Text()
 	{
 		super();
 		publisher = "";
 		year = 0;
+		
+		filepath = "";
 	}
 	
 	Text(String tit, String mkr, Integer yr, String ... kw)
@@ -21,7 +25,11 @@ public class Text
 		super(tit, kw);
 		publisher = mkr;
 		year = yr;
+		
+		filepath = "";
 	}
+	
+	//TODO Add constructor for existing filepath
 	
 	/* General Methods */
 	
@@ -51,22 +59,6 @@ public class Text
 		return null;
 	}
 
-	/* Search Methods */
-	// Deprecated
-	public boolean matchTit(String tit)
-	{
-		if(this.getTitle().equals(tit)) return true;
-		return false;
-	}
-	
-	// Deprecated
-	public boolean matchPub(String pub)
-	{
-		if(publisher.equals(pub)) return true;
-		return false;
-	}
-
-
 	/* Publisher Methods */
 	public String getPublisher()
 	{
@@ -86,6 +78,17 @@ public class Text
 	public void setYear(Integer year)
 	{
 		this.year = year;
+	}
+	
+	/* Filepath Methods */
+	public String getFilepath()
+	{
+		return filepath;
+	}
+	
+	public void setFilepath(String filepath)
+	{
+		this.filepath = filepath;
 	}
 
 }

@@ -3,10 +3,11 @@ package cabinet;
 import java.util.*;
 
 public class Folder
+	implements Comparable<Folder>
 {
 	private	String					label;
 	private	List<Item>				contents;
-	private	List<Folder>			subfolders;
+	private	Set<Folder>				subfolders;
 	private Map<String, List<Item>>	kwmap;
 	
 
@@ -15,14 +16,20 @@ public class Folder
 	{
 		label		= "";
 		contents	= new ArrayList<>();
-		subfolders	= new ArrayList<>(); 
+		subfolders	= new TreeSet<>(); 
 	}
 	// New folder with predefined label
 	public Folder(String label)
 	{
 		this.label	= label;
 		contents	= new ArrayList<>();
-		subfolders	= new ArrayList<>();
+		subfolders	= new TreeSet<>();
+	}
+	
+	// General methods
+	public int compareTo(Folder other)
+	{
+		return this.getLabel().compareTo(other.getLabel());
 	}
 	
 	// Label methods
@@ -53,7 +60,7 @@ public class Folder
 		else return false;
 	}
 	
-	public List<Folder> getSubfolders()
+	public Collection<Folder> getSubfolders()
 	{
 		return subfolders;
 	}

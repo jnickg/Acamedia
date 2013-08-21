@@ -7,14 +7,14 @@ import java.util.*;
 public class Cabinet
 {
 	private	List<Item>				unsorted;
-	private	List<Folder>			folders;
+	private	Set<Folder>				folders;
 	private Map<String, List<Item>>	kwmap;
 	
 	// Constructors
 	public Cabinet()
 	{
 		unsorted	= new ArrayList<>();
-		folders		= new ArrayList<>();
+		folders		= new TreeSet<>();
 		kwmap		= new HashMap<>();
 	}
 	

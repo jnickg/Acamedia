@@ -6,14 +6,20 @@ import java.util.*;
 
 public class Cabinet
 {
+	private	List<Item>				unsorted;
+	private	List<Folder>			folders;
+	private Map<String, List<Item>>	kwmap;
+	
 	// Constructors
 	public Cabinet()
 	{
-		// TODO Auto-generated constructor stub
+		unsorted	= new ArrayList<>();
+		folders		= new ArrayList<>();
+		kwmap		= new HashMap<>();
 	}
 	
 	// General Methods
-	public Collection<Item> itemsForKeyword(String keyword)
+	public Collection<Item> allItemsForKeyword(String keyword)
 	{
 		// TODO Auto-generated constructor stub
 		return null;

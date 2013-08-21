@@ -2,7 +2,6 @@ package cabinet;
 
 public class Text
 		extends Item
-		implements Comparable<Text>
 {
 	/* Variable Members */
 	private		String		publisher;
@@ -35,22 +34,22 @@ public class Text
 	
 	// Implementation of the Comparable interface is required to sort
 	// items correctly, based on title, year, and then publisher
-	@Override
-	public int compareTo(Text other)
-	{
-		int title  = this.getTitle().compareTo(other.getTitle());
-		if (title==0)
-		{
-			int yr = this.getYear().compareTo(other.getYear());
-			if (yr==0)
-			{
-				return this.getPublisher().compareTo(other.getPublisher());
-				
-			}
-			else return yr;
-		}
-		else return title;
-	}
+//	@Override
+//	public int compareTo(Text other)
+//	{
+//		int title  = this.getTitle().compareTo(other.getTitle());
+//		if (title==0)
+//		{
+//			int yr = this.getYear().compareTo(other.getYear());
+//			if (yr==0)
+//			{
+//				return this.getPublisher().compareTo(other.getPublisher());
+//				
+//			}
+//			else return yr;
+//		}
+//		else return title;
+//	}
 	
 	@Override
 	public String toString()

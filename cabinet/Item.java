@@ -3,6 +3,7 @@ package cabinet;
 import java.util.*;
 
 public abstract class Item
+	implements Comparable<Item>
 {
 	/* Variable Members */
 	private		String		title;
@@ -29,6 +30,11 @@ public abstract class Item
 	// All items must know how to print themselves
 	@Override
 	public abstract String toString();
+	
+	public int compareTo(Item other)
+	{
+		return this.getTitle().compareTo(other.getTitle());
+	}
 	
 	// Deprecated
 	public boolean matchKw(String ... kw)

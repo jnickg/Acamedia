@@ -6,14 +6,14 @@ import java.util.*;
 
 public class Cabinet
 {
-	private	List<Item>				unsorted;
+	private	List<Item>				contents;
 	private	Set<Folder>				folders;
 	private Map<String, List<Item>>	kwmap;
 	
 	// Constructors
 	public Cabinet()
 	{
-		unsorted	= new ArrayList<>();
+		contents	= new ArrayList<>();
 		folders		= new TreeSet<>();
 		kwmap		= new HashMap<>();
 	}
@@ -47,5 +47,11 @@ public class Cabinet
 				disMap.put(k, temp);
 			}
 		}
+	}
+	
+	// Sorting Methods
+	public void sortContentsByTitle()
+	{
+		
 	}
 }

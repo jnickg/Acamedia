@@ -9,6 +9,8 @@ public abstract class Item
 	private		String		title;
 	private		Set<String> keywords;
 	
+	private		String		filepath;
+
 	/* Constructors */
 	Item()
 	{
@@ -16,13 +18,18 @@ public abstract class Item
 		
 		keywords = new TreeSet<>();
 		keywords.add("none");
+		
+		filepath = "";
 	}
 	
 	Item(String tit, String ... kw)
 	{
 		title = tit;
+		
 		keywords = new TreeSet<>();
 		for(String s: kw) keywords.add(s);
+		
+		filepath = "";
 	}
 	
 	/* General Methods */
@@ -84,6 +91,17 @@ public abstract class Item
 	{
 		if(keywords.contains("none")) keywords.clear();
 		for(String s: kw) keywords.add(s);
+	}
+	
+	/* Filepath Methods */
+	public String getFilepath()
+	{
+		return filepath;
+	}
+	
+	public void setFilepath(String filepath)
+	{
+		this.filepath = filepath;
 	}
 
 }

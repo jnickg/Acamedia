@@ -54,7 +54,7 @@ public class Text
 	@Override
 	public String toString()
 	{
-		//TODO
+		//TODO the toString
 		return null;
 	}
 

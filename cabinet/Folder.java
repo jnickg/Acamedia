@@ -32,6 +32,21 @@ public class Folder
 		return this.getLabel().compareTo(other.getLabel());
 	}
 	
+	public Collection<Item> getAllContents()
+	{
+		List<Item> allContents = new ArrayList<>(contents);
+		if (this.hasSubfolders())
+			for (Folder f: subfolders)
+			{
+				Collection<Item> subcontents = f.getAllContents();
+				for(Item i: subcontents)
+				{
+					allContents.add(i);
+				}
+			}
+		return allContents;
+	}
+	
 	// Label methods
 	public String getLabel()
 	{

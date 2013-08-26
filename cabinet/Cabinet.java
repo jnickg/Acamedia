@@ -25,6 +25,21 @@ public class Cabinet
 		return null;
 	}
 	
+	public Collection<Item> getAllContents()
+	{
+		List<Item> allContents = new ArrayList<>(contents);
+		if (this.hasFolders())
+			for (Folder f: folders)
+			{
+				Collection<Item> subcontents = f.getAllContents();
+				for(Item i: subcontents)
+				{
+					allContents.add(i);
+				}
+			}
+		return allContents;
+	}
+	
 	public void printItem(PrintStream out, Item item)
 	{
 		// TODO Auto-generated constructor stub
@@ -48,6 +63,14 @@ public class Cabinet
 			}
 		}
 	}
+	
+	// Folders Methods
+	public Boolean hasFolders()
+	{
+		if (folders.isEmpty()) return true;
+		else return false;
+	}
+	
 	
 	// Sorting Methods
 	public void sortContentsByTitle()

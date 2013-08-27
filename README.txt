@@ -10,6 +10,9 @@ Acamedia has the following capabilities:
 
 *Collect your academic article PDFs into one consolidated library
 *Store metadata for each document, for easy searching and retrieval
+	*Data needed for academic citations
+	*In-document data, such as academic keywords
+	*User-created data, such as tagging, for personalized keywording
 *Manually organize your documents into "folders"
 *Store your folders inside your academic filing "cabinet."
 

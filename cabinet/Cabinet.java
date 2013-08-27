@@ -19,9 +19,15 @@ public class Cabinet
 	}
 	
 	// General Methods
-	public Collection<Item> allItemsForKeyword(String keyword)
+	public Collection<Item> contentsForKeyword(String keyword)
 	{
-		// TODO Auto-generated constructor stub
+		// TODO return items in this level only, which fit the kw
+		return null;
+	}
+	
+	public Collection<Item> allContentsForKeyword(String keyword)
+	{
+		// TODO return all items in Cabinet which fit the kw
 		return null;
 	}
 	

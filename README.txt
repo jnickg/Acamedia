@@ -17,7 +17,8 @@ Acamedia has the following capabilities:
 
 Acamedia will have the following capabilities:
 
-*Hover tags—see meta data for your document without even opening it
+*Scan readable-text PDFs to automatically gather metadata
+*Hover tags—see metadata for your document without even opening it
 *Give you an easy-to-use citation for any of your documents
 *Assemble documents for use in a project
 	*Batch print them

@@ -6,6 +6,7 @@ public class Text
 	/* Variable Members */
 	private		String		publisher;
 	private		Integer		year;
+	// TODO Add other members for citation data
 	
 	/* Constructors */
 	Text()

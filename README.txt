@@ -20,17 +20,23 @@ Acamedia has the following capabilities:
 
 Acamedia will have the following capabilities:
 
-*Scan readable-text PDFs to automatically gather metadata
 *Hover tags—see metadata for your document without even opening it
 *Give you an easy-to-use citation for any of your documents
 *Assemble documents for use in a project
 	*Batch print them
 	*Generate a citation page for all documents
 	*Save projects as new folders for easy retrieval
-*Batch search your text-enabled PDFs
 *Different file formats
 	*Store your professors' syllabi and assignment documents
 	*Store images, audio, or video files
+
+-----
+
+Acamedia may someday get the following capabilities:
+
+*Scan readable-text PDFs to automatically gather metadata
+*Batch search your text-enabled PDFs
+*Scan readable-text PDFs' citations pages to check if a new article references any articles in your library
 
 -----
 

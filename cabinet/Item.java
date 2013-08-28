@@ -6,10 +6,20 @@ public abstract class Item
 	implements Comparable<Item>
 {
 	/* Variable Members */
-	private		String		title;
-	private		Set<String> keywords;
+	private			String		title;
+	private			Set<String> keywords;
+	private			String		filepath;
+	private			String		type;
 	
-	private		String		filepath;
+	private static	Set<String> types = new TreeSet<>(); // Stores built-in types of Items
+	static
+	{
+		types.add("literature");
+		types.add("course materials");
+		types.add("notes");
+		types.add("other");
+		types.add("n/a");
+	}
 
 	/* Constructors */
 	Item()
@@ -18,6 +28,8 @@ public abstract class Item
 		
 		keywords = new TreeSet<>();
 		keywords.add("none");
+		
+		type = "n/a";
 		
 		filepath = "";
 	}
@@ -29,12 +41,26 @@ public abstract class Item
 		keywords = new TreeSet<>();
 		for(String s: kw) keywords.add(s);
 		
+		type = "n/a";
+		
 		filepath = "";
+	}
+	
+	Item(String tit, String typ, String fp, String ... kw)
+	{
+		title = tit;
+		
+		keywords = new TreeSet<>();
+		for(String s: kw) keywords.add(s);
+		
+		type = typ;
+		types.add(typ);
+		
+		filepath = fp;
 	}
 	
 	/* General Methods */
 	
-	// All items must know how to print themselves
 	@Override
 	public abstract String toString();
 	
@@ -91,6 +117,27 @@ public abstract class Item
 	{
 		if(keywords.contains("none")) keywords.clear();
 		for(String s: kw) keywords.add(s);
+	}
+	
+	/* Type Methods */
+	public String getType()
+	{
+		return type;
+	}
+	
+	public void setType(String type)
+	{
+		this.type = type;
+		types.add(type);
+	}
+	
+	public static Set<String> getTypes()
+	{
+		return types;
+	}
+	public static Boolean addType(String type)
+	{
+		return (types.add(type));
 	}
 	
 	/* Filepath Methods */

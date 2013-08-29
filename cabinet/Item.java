@@ -11,6 +11,8 @@ public abstract class Item
 	private			String		filepath; // the location of the related file
 	private			String		type; // user-input type of item that it is (unrelated to its concrete Class)
 	
+	private 		String		uuid; // universally unique identifier
+	
 	private static final String notag = "none"; // used when there are no members for "tags"
 	private static	Set<String> types = new TreeSet<>(); // Stores built-in types of Items
 	static
@@ -33,6 +35,8 @@ public abstract class Item
 		type = "n/a";
 		
 		filepath = "";
+		
+		uuid = UUID.randomUUID().toString();
 	}
 	
 	Item(String tit, String ... tgs)
@@ -45,6 +49,8 @@ public abstract class Item
 		type = "n/a";
 		
 		filepath = "";
+		
+		uuid = UUID.randomUUID().toString();
 	}
 	
 	Item(String tit, String typ, String fp, String ... tgs)
@@ -58,6 +64,8 @@ public abstract class Item
 		types.add(typ);
 		
 		filepath = fp;
+		
+		uuid = UUID.randomUUID().toString();
 	}
 	
 	/* General Methods */
@@ -159,4 +167,9 @@ public abstract class Item
 		this.filepath = filepath;
 	}
 
+	/* UUID Methods */
+	public String getUUID()
+	{
+		return uuid;
+	}
 }

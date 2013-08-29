@@ -5,7 +5,8 @@ import java.util.*;
 public class Article
 	extends Text
 {	
-	private 	String		journal;	// academic journal in which the article was published
+	private 	String		journal;	// academic journal through which the article was published
+	private		Integer		jrnlVol, jrnlEd, jrnlPg; // specific academic journal info for this article
 	private		Set<String>	contributors;	// contributors to the writing or research
 	private		Set<String>	keywords;	// academic keywords used in this article
 	
@@ -18,6 +19,9 @@ public class Article
 		super();
 		
 		journal = "";
+		setJrnlVol(1);
+		setJrnlEd(1);
+		setJrnlPg(1);
 		
 		contributors = new TreeSet<>();
 		contributors.add("none");
@@ -26,11 +30,14 @@ public class Article
 		keywords.add(nokeywrd);
 	}
 	
-	public Article(String tit, String mkr, String jrnl, Integer yr, String ... tgs)
+	public Article(String tit, String mkr, String pbc, String jrnl, Integer jv, Integer je, Integer jp, Integer yr, String ... tgs)
 	{
-		super(tit, mkr, yr, tgs);
+		super(tit, mkr, pbc, yr, tgs);
 		
 		journal = jrnl;
+		setJrnlVol(jv);
+		setJrnlEd(je);
+		setJrnlPg(jp);
 		
 		contributors = new TreeSet<>();
 		contributors.add(nocontrb);
@@ -57,6 +64,30 @@ public class Article
 		this.journal = journal;
 	}
 	
+	public Integer getJrnlPg() {
+		return jrnlPg;
+	}
+
+	public void setJrnlPg(Integer jrnlPg) {
+		this.jrnlPg = jrnlPg;
+	}
+
+	public Integer getJrnlVol() {
+		return jrnlVol;
+	}
+
+	public void setJrnlVol(Integer jrnlVol) {
+		this.jrnlVol = jrnlVol;
+	}
+
+	public Integer getJrnlEd() {
+		return jrnlEd;
+	}
+
+	public void setJrnlEd(Integer jrnlEd) {
+		this.jrnlEd = jrnlEd;
+	}
+
 	/* Contributors Methods */
 	// Returns the contributors as a set of strings
 	public Set<String> getContribSet()

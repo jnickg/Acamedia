@@ -4,7 +4,7 @@ public class Text
 		extends Item
 {
 	/* Variable Members */
-	private		String		publisher;
+	private		String		publisher, publisherCity;
 	private		Integer		year;
 	// TODO Add other members for citation data
 	
@@ -13,13 +13,15 @@ public class Text
 	{
 		super();
 		publisher = "";
+		publisherCity = "";
 		year = 0;
 	}
 	
-	Text(String tit, String mkr, Integer yr, String ... tgs)
+	Text(String tit, String mkr, String pbc, Integer yr, String ... tgs)
 	{
 		super(tit, tgs);
 		publisher = mkr;
+		publisherCity = pbc;
 		year = yr;
 	}
 	
@@ -58,10 +60,16 @@ public class Text
 	{
 		return publisher;
 	}
+	
+	public String getPubCity()
+	{
+		return publisherCity;
+	}
 
-	public void setPublisher(String publisher)
+	public void setPublisher(String publisher, String publisherCity)
 	{
 		this.publisher = publisher;
+		this.publisherCity = publisherCity;
 	}
 	
 	/* Year Methods */

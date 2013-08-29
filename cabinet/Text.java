@@ -16,9 +16,9 @@ public class Text
 		year = 0;
 	}
 	
-	Text(String tit, String mkr, Integer yr, String ... kw)
+	Text(String tit, String mkr, Integer yr, String ... tgs)
 	{
-		super(tit, kw);
+		super(tit, tgs);
 		publisher = mkr;
 		year = yr;
 	}

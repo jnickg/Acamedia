@@ -6,11 +6,12 @@ public abstract class Item
 	implements Comparable<Item>
 {
 	/* Variable Members */
-	private			String		title;
-	private			Set<String> keywords;
-	private			String		filepath;
-	private			String		type;
+	private			String		title; // the name of the item
+	private			Set<String> tags; // user-input tags
+	private			String		filepath; // the location of the related file
+	private			String		type; // user-input type of item that it is (unrelated to its concrete Class)
 	
+	private static final String notag = "none"; // used when there are no members for "tags"
 	private static	Set<String> types = new TreeSet<>(); // Stores built-in types of Items
 	static
 	{
@@ -26,32 +27,32 @@ public abstract class Item
 	{
 		title = "";
 		
-		keywords = new TreeSet<>();
-		keywords.add("none");
+		tags = new TreeSet<>();
+		tags.add(notag);
 		
 		type = "n/a";
 		
 		filepath = "";
 	}
 	
-	Item(String tit, String ... kw)
+	Item(String tit, String ... tgs)
 	{
 		title = tit;
 		
-		keywords = new TreeSet<>();
-		for(String s: kw) keywords.add(s);
+		tags = new TreeSet<>();
+		for(String s: tgs) tags.add(s);
 		
 		type = "n/a";
 		
 		filepath = "";
 	}
 	
-	Item(String tit, String typ, String fp, String ... kw)
+	Item(String tit, String typ, String fp, String ... tgs)
 	{
 		title = tit;
 		
-		keywords = new TreeSet<>();
-		for(String s: kw) keywords.add(s);
+		tags = new TreeSet<>();
+		for(String s: tgs) tags.add(s);
 		
 		type = typ;
 		types.add(typ);
@@ -70,9 +71,9 @@ public abstract class Item
 	}
 	
 	// Deprecated
-	public boolean matchKw(String ... kw)
+	public boolean matchTag(String ... tgs)
 	{
-		for(String s: kw)	if(keywords.contains(s.toLowerCase()))	return true;
+		for(String s: tgs)	if(tags.contains(s.toLowerCase()))	return true;
 		return false;
 	}
 
@@ -87,36 +88,43 @@ public abstract class Item
 		this.title = title;
 	}
 
-	/* Keywords Methods */
-	public Set<String>getKWset()
+	/* Tags Methods */
+	public Set<String>getTagSet()
 	{
-		return keywords;
+		return tags;
 	}
 
 	// Returns an item's keywords as a single string, separated by
 	// commas.
-	public String getKeywords()
+	public String getTags()
 	{
 		Boolean first = true;
-		StringBuilder kw = new StringBuilder();
-		for(String s: keywords)
+		StringBuilder tgs = new StringBuilder();
+		for(String s: tags)
 		{
-			kw.append((first ? "" : ", ") + s);
+			tgs.append((first ? "" : ", ") + s);
 			if (first) first=false;
 		}
-		return kw.toString();
+		return tgs.toString();
 	}
 	
-	public void setKeywords(String ... kw)
+	public void setTags(String ... tgs)
 	{
-		keywords.clear();
-		for(String s: kw) keywords.add(s);
+		tags.clear();
+		for(String s: tgs) tags.add(s);
 	}
 	
-	public void addKeywords(String ... kw)
+	public void addTags(String ... tgs)
 	{
-		if(keywords.contains("none")) keywords.clear();
-		for(String s: kw) keywords.add(s);
+		if(tags.contains("none")) tags.clear();
+		for(String s: tgs) tags.add(s);
+	}
+	
+	public Boolean rmvTag(String tag)
+	{
+		Boolean wasThere = tags.remove(tag);
+		if (tags.isEmpty()) tags.add(notag);
+		return wasThere;
 	}
 	
 	/* Type Methods */

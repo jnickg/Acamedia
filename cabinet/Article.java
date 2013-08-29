@@ -5,8 +5,13 @@ import java.util.*;
 public class Article
 	extends Text
 {	
-	private 	String		journal;
-	private		Set<String>	contributors;
+	private 	String		journal;	// academic journal in which the article was published
+	private		Set<String>	contributors;	// contributors to the writing or research
+	private		Set<String>	keywords;	// academic keywords used in this article
+	
+	private static final String	nocontrb = "nobody"; // used when there are no contributors
+	private static final String nokeywrd = "none"; // used when there are no keywords
+	
 	
 	public Article()
 	{
@@ -16,16 +21,22 @@ public class Article
 		
 		contributors = new TreeSet<>();
 		contributors.add("none");
+		
+		keywords = new TreeSet<>();
+		keywords.add(nokeywrd);
 	}
 	
-	public Article(String tit, String mkr, String jrnl, Integer yr, String ... kw)
+	public Article(String tit, String mkr, String jrnl, Integer yr, String ... tgs)
 	{
-		super(tit, mkr, yr, kw);
+		super(tit, mkr, yr, tgs);
 		
 		journal = jrnl;
 		
 		contributors = new TreeSet<>();
-		contributors.add("none");
+		contributors.add(nocontrb);
+		
+		keywords = new TreeSet<>();
+		keywords.add(nokeywrd);
 	}
 
 	@Override
@@ -77,8 +88,56 @@ public class Article
 	// Adds existing contributors
 	public void addContributors(String... contrib)
 	{
-		if(contributors.contains("none")) contributors.clear();
+		if(contributors.contains(nocontrb)) contributors.clear();
 		for(String s: contrib) contributors.add(s);
 	}
+	
+	public Boolean rmvContributor(String contrib)
+	{
+		Boolean wasThere = contributors.remove(contrib);
+		if (contributors.isEmpty()) contributors.add(nocontrb);
+		return wasThere;
+	}
+	
+	/* Keywords Methods */
+	// Returns the contributors as a set of strings
+	public Set<String> getKWSet()
+	{
+		return keywords;
+	}
+	
+	// Returns an item's contributors as a single string, separated by
+	// commas.
+	public String getKeywords()
+	{
+		Boolean first = true;
+		StringBuilder keywrd = new StringBuilder();
+		for(String s: keywords)
+		{
+			keywrd.append((first ? "" : ", ") + s);
+			if (first) first=false;
+		}
+		return keywrd.toString();
+	}
+	
+	// Clears existing contributors and then adds new ones.
+	public void setKeywords(String... keywrd)
+	{
+		keywords.clear();
+		for(String s: keywrd) keywords.add(s + " ");
+	}
+	
+	// Adds existing contributors
+	public void addKeywords(String... keywrd)
+	{
+		if(keywords.contains(nokeywrd)) keywords.clear();
+		for(String s: keywrd) keywords.add(s);
+	}
 
+	public Boolean rmvKeyword(String keywrd)
+	{
+		Boolean wasThere = keywords.remove(keywrd);
+		if (keywords.isEmpty()) keywords.add(nokeywrd);
+		return wasThere;
+	}
 }

@@ -1,5 +1,6 @@
 package cabinet;
 
+import java.io.File;
 import java.util.*;
 
 public class Article
@@ -14,9 +15,9 @@ public class Article
 	private static final String nokeywrd = "none"; // used when there are no keywords
 	
 	
-	public Article()
+	public Article(String tit, File loc)
 	{
-		super();
+		super(tit, loc);
 		
 		journal = "";
 		setJrnlVol(1);
@@ -30,9 +31,9 @@ public class Article
 		keywords.add(nokeywrd);
 	}
 	
-	public Article(String tit, String mkr, String pbc, String jrnl, Integer jv, Integer je, Integer jp, Integer yr, String ... tgs)
+	public Article(String tit, File loc, String mkr, String pbc, String jrnl, Integer jv, Integer je, Integer jp, Integer yr, String ... tgs)
 	{
-		super(tit, mkr, pbc, yr, tgs);
+		super(tit, loc, mkr, pbc, yr, tgs);
 		
 		journal = jrnl;
 		setJrnlVol(jv);

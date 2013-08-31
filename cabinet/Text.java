@@ -1,5 +1,7 @@
 package cabinet;
 
+import java.io.File;
+
 public class Text
 		extends Item
 {
@@ -9,17 +11,17 @@ public class Text
 	// TODO Add other members for citation data
 	
 	/* Constructors */
-	Text()
+	Text(String tit, File loc)
 	{
-		super();
+		super(tit, loc);
 		publisher = "";
 		publisherCity = "";
 		year = 0;
 	}
 	
-	Text(String tit, String mkr, String pbc, Integer yr, String ... tgs)
+	Text(String tit, File loc, String mkr, String pbc, Integer yr, String ... tgs)
 	{
-		super(tit, tgs);
+		super(tit, loc, tgs);
 		publisher = mkr;
 		publisherCity = pbc;
 		year = yr;

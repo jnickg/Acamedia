@@ -1,6 +1,9 @@
 package cabinet;
 
+// TODO Clean up imports!
 import java.util.*;
+import java.io.*;
+import java.awt.*;
 
 public abstract class Item
 	implements Comparable<Item>
@@ -8,7 +11,7 @@ public abstract class Item
 	/* Variable Members */
 	private			String		title; // the name of the item
 	private			Set<String> tags; // user-input tags
-	private			String		filepath; // the location of the related file
+	private			File		file; // the full location of the related file
 	private			String		type; // user-input type of item that it is (unrelated to its concrete Class)
 	
 	private 		String		uuid; // universally unique identifier
@@ -25,7 +28,7 @@ public abstract class Item
 	}
 
 	/* Constructors */
-	Item()
+	Item(String tit, File loc)
 	{
 		title = "";
 		
@@ -34,12 +37,12 @@ public abstract class Item
 		
 		type = "n/a";
 		
-		filepath = "";
+		file = new File(loc, tit);
 		
 		uuid = UUID.randomUUID().toString();
 	}
 	
-	Item(String tit, String ... tgs)
+	Item(String tit, File loc, String ... tgs)
 	{
 		title = tit;
 		
@@ -48,12 +51,12 @@ public abstract class Item
 		
 		type = "n/a";
 		
-		filepath = "";
+		file = new File(loc, tit);
 		
 		uuid = UUID.randomUUID().toString();
 	}
 	
-	Item(String tit, String typ, String fp, String ... tgs)
+	Item(String tit, File loc, String typ, String ... tgs)
 	{
 		title = tit;
 		
@@ -63,7 +66,9 @@ public abstract class Item
 		type = typ;
 		types.add(typ);
 		
-		filepath = fp;
+		// puts the file in "loc" which is the location of the folder
+		// "fp" is the name of the file.
+		file = new File(loc, tit);
 		
 		uuid = UUID.randomUUID().toString();
 	}
@@ -157,14 +162,19 @@ public abstract class Item
 	}
 	
 	/* Filepath Methods */
-	public String getFilepath()
+	public File getFile()
 	{
-		return filepath;
+		return file;
 	}
 	
-	public void setFilepath(String filepath)
+	public void setFile(File f)
 	{
-		this.filepath = filepath;
+		file = f;
+	}
+	
+	public void openFile() throws IOException
+	{
+		Desktop.getDesktop().open(file);
 	}
 
 	/* UUID Methods */

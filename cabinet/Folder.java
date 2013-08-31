@@ -1,29 +1,25 @@
 package cabinet;
 
+import java.io.File;
 import java.util.*;
 
 public class Folder
 	implements Comparable<Folder>
 {
 	private	String					label;
+	private File					location;
 	private	List<Item>				contents;
 	private	Set<Folder>				subfolders;
 	private Map<String, List<Item>>	kwmap;
 	
-
-	// New folder
-	public Folder()
+	
+	// New folder with a location	
+	public Folder(File loc, String lbl)
 	{
-		label		= "";
+		label		= lbl;
+		location	= new File(loc, lbl);
 		contents	= new ArrayList<>();
 		subfolders	= new TreeSet<>(); 
-	}
-	// New folder with predefined label
-	public Folder(String label)
-	{
-		this.label	= label;
-		contents	= new ArrayList<>();
-		subfolders	= new TreeSet<>();
 	}
 	
 	// General methods
@@ -66,6 +62,12 @@ public class Folder
 	public List<Item> getContents()
 	{
 		return contents;
+	}
+	
+	// File operations
+	public File getLocation()
+	{
+		return location;
 	}
 	
 	// Subfolders operations

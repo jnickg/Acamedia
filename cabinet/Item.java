@@ -10,10 +10,10 @@ public abstract class Item
 {
 	/* Variable Members */
 	private			String		title; // the name of the item
-	private			Set<String> tags; // user-input tags
 	private			File		file; // the full location of the related file
-	private			String		type; // user-input type of item that it is (unrelated to its concrete Class)
 	
+	private			Set<String> tags; // user-input tags
+	private			String		type; // user-input type of item that it is (unrelated to its concrete Class)
 	private 		String		uuid; // universally unique identifier
 	
 	private static final String notag = "none"; // used when there are no members for "tags"

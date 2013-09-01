@@ -10,7 +10,8 @@ public abstract class Storage
 	private final File				location;
 	private	List<Item>				contents;
 	private	Set<Folder>				folders;
-	//private Map<String, List<Item>>	kwmap;
+	
+	//private Map<String, List<Item>>	tagmap;
 	
 	
 	// Constructors

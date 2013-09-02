@@ -11,7 +11,8 @@ public abstract class Storage
 	private	List<Item>				contents;
 	private	Set<Folder>				folders;
 	
-	//private Map<String, List<Item>>	tagmap;
+	private Map<String, Set<Item>>	uuidMap; // Allows key collisions by storing Items in a Set
+	private Map<String, Set<Item>>	tagMap;
 	
 	
 	// Constructors
@@ -22,6 +23,7 @@ public abstract class Storage
 		location = new File(loc, lbl);
 		contents = new ArrayList<>();
 		folders = new TreeSet<>();
+		uuidMap = new HashMap<>();
 	}
 	
 	
@@ -30,24 +32,24 @@ public abstract class Storage
 	
 	public abstract int compareTo(Storage other);
 	
-//	private void addToMap(Map<String, Set<Item>> disMap, Item disValue, String... disKey)
-//	{
-//		for(String k: disKey)
-//		{
-//			if(!(disMap.containsKey(k)))
-//			{
-//				Set<Item> temp = new TreeSet<>();
-//				temp.add(disValue);
-//				disMap.put(k, temp);
-//			}
-//			else
-//			{
-//				Set<Item> temp = disMap.get(k);
-//				temp.add(disValue);
-//				disMap.put(k, temp);
-//			}
-//		}
-//	}
+	private void addToSetMap(Map<String, Set<Item>> disMap, Item disValue, String... disKey)
+	{
+		for(String k: disKey)
+		{
+			if(!(disMap.containsKey(k)))
+			{
+				Set<Item> temp = new TreeSet<>();
+				temp.add(disValue);
+				disMap.put(k, temp);
+			}
+			else
+			{
+				Set<Item> temp = disMap.get(k);
+				temp.add(disValue);
+				disMap.put(k, temp);
+			}
+		}
+	}
 	
 	
 	
@@ -125,6 +127,54 @@ public abstract class Storage
 		Folder nf = new Folder(location, lbl);
 		folders.add(nf);
 		return nf;
+	}
+	
+	
+	
+	// New Item Methods
+	
+	public Item newText(String tit, File loc, String pub, String pbc,
+			Integer yr,	String typ,	String isbn)
+	{
+		// Create the basic Text
+		Text new1 = new Text(tit, loc);
+		
+		// Add other data
+		new1.setType(typ);
+		new1.setISBN(isbn);
+		new1.setPublisher(pub, pbc);
+		new1.setYear(yr);
+		
+		// Add to master list(s)
+		contents.add(new1);
+		
+		// Add to other maps
+		addToSetMap(uuidMap, new1, new1.getUUID());
+		
+		// Return reference to new Text
+		return new1;
+	}
+	
+	public Item newArticle(String tit, File loc, String pub, String pbc,
+			Integer yr,	String typ,	String isbn, String ... cntrb)
+	{
+		Article new1 = new Article(tit, loc);
+		
+		// Add other data
+		new1.setType(typ);
+		new1.setISBN(isbn);
+		new1.setContributors(cntrb);
+		new1.setPublisher(pub, pbc);
+		new1.setYear(yr);
+		
+		// Add to master list(s)
+		contents.add(new1);
+		
+		// Add to other maps
+		addToSetMap(uuidMap, new1, new1.getUUID());
+		
+		// Return reference to new Text
+		return new1;
 	}
 	
 	

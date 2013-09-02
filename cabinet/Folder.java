@@ -3,7 +3,7 @@ package cabinet;
 import java.io.File;
 
 public class Folder
-	extends Storage
+		extends Storage
 {
 
 	public Folder(File loc, String lbl)

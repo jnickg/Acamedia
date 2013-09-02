@@ -1,12 +1,15 @@
 package cabinet;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Text
 		extends Item
 {
 	/* Variable Members */
 	private		String		publisher, publisherCity;
+	private		String		isbn;
 	private		Integer		year;
 	// TODO Add other members for citation data
 	
@@ -17,14 +20,17 @@ public class Text
 		publisher = "";
 		publisherCity = "";
 		year = 0;
+		isbn = "";
 	}
 	
-	Text(String tit, File loc, String mkr, String pbc, Integer yr, String ... tgs)
+	Text(String tit, File loc, String mkr, String pbc, Integer yr,
+			String isbn, String ... tgs)
 	{
 		super(tit, loc, tgs);
 		publisher = mkr;
 		publisherCity = pbc;
 		year = yr;
+		this.isbn = isbn;
 	}
 	
 	//TODO Add constructor for existing filepath
@@ -56,6 +62,17 @@ public class Text
 		//TODO the toString
 		return null;
 	}
+	
+	@Override
+	public List<String> getCitation()
+	{
+		List<String> cit = new ArrayList<>();
+		cit.add(this.getTitle());
+		cit.add(this.getYear().toString());
+		cit.add(this.getPublisher());
+		cit.add(this.getPubCity());
+		return cit;
+	}
 
 	/* Publisher Methods */
 	public String getPublisher()
@@ -83,5 +100,16 @@ public class Text
 	{
 		this.year = year;
 	}
+	
+	/* ISBN Methods */
+	public String getISBN()
+	{
+		return isbn;
+	}
+	public void setISBN(String isbn)
+	{
+		this.isbn = isbn;
+	}
+	
 
 }

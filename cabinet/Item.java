@@ -2,6 +2,7 @@ package cabinet;
 
 // TODO Clean up imports!
 import java.util.*;
+import java.util.List;
 import java.io.*;
 import java.awt.*;
 
@@ -77,6 +78,8 @@ public abstract class Item
 	
 	@Override
 	public abstract String toString();
+	
+	public abstract List<String> getCitation();
 	
 	public int compareTo(Item other)
 	{

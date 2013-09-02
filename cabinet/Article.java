@@ -31,9 +31,11 @@ public class Article
 		keywords.add(nokeywrd);
 	}
 	
-	public Article(String tit, File loc, String mkr, String pbc, String jrnl, Integer jv, Integer je, Integer jp, Integer yr, String ... tgs)
+	public Article(String tit, File loc, String mkr, String pbc,
+			String jrnl, Integer jv, Integer je, Integer jp,
+			Integer yr, String isbn, String ... tgs)
 	{
-		super(tit, loc, mkr, pbc, yr, tgs);
+		super(tit, loc, mkr, pbc, yr, isbn, tgs);
 		
 		journal = jrnl;
 		setJrnlVol(jv);
@@ -52,6 +54,18 @@ public class Article
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public List<String> getCitation()
+	{
+		List<String> cit = new ArrayList<>();
+		cit.add(this.getContributors());
+		cit.add(this.getYear().toString());
+		cit.add(this.getTitle());
+		cit.add(this.getPublisher());
+		cit.add(this.getPubCity());
+		return cit;
 	}
 	
 	/* Journal Methods */

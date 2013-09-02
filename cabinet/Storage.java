@@ -12,6 +12,7 @@ public abstract class Storage
 	private	Set<Folder>				folders;
 	
 	private Map<String, Set<Item>>	uuidMap; // Allows key collisions by storing Items in a Set
+	private Map<String, Set<Item>>	titleMap;
 	private Map<String, Set<Item>>	tagMap;
 	
 	
@@ -23,7 +24,9 @@ public abstract class Storage
 		location = new File(loc, lbl);
 		contents = new ArrayList<>();
 		folders = new TreeSet<>();
+		
 		uuidMap = new HashMap<>();
+		titleMap = new HashMap<>();
 	}
 	
 	
@@ -150,6 +153,7 @@ public abstract class Storage
 		
 		// Add to other maps
 		addToSetMap(uuidMap, new1, new1.getUUID());
+		addToSetMap(titleMap, new1, tit);
 		
 		// Return reference to new Text
 		return new1;
@@ -172,6 +176,7 @@ public abstract class Storage
 		
 		// Add to other maps
 		addToSetMap(uuidMap, new1, new1.getUUID());
+		addToSetMap(titleMap, new1, tit);
 		
 		// Return reference to new Text
 		return new1;

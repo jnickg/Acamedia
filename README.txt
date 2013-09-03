@@ -1,4 +1,4 @@
-Acamedia
+﻿Acamedia
 
 ========================================
 
@@ -29,6 +29,9 @@ Acamedia will have the following capabilities:
 *Different file formats
 	*Store your professors' syllabi and assignment documents
 	*Store images, audio, or video files
+*Rails app backend that interacts w/ WorldCat
+	*Search new additions to the library
+	*Attempt to pull information automatically (so you don't have to enter things like ISBN, journal, etc)
 
 -----
 

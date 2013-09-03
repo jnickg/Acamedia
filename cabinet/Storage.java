@@ -6,10 +6,10 @@ import java.util.*;
 public abstract class Storage
 		implements Comparable<Storage>
 {
-	private	String					label;
-	private final File				location;
-	private	List<Item>				contents;
-	private	Set<Folder>				folders;
+	private	String					label; // Used both to name the storage and specify its location
+	private final File				location; // The location of the storage
+	private	List<Item>				contents; // Items held directly inside the storage
+	private	Set<Folder>				folders; // All labels must be unique
 	
 	private Map<String, Set<Item>>	uuidMap; // Allows key collisions by storing Items in a Set
 	private Map<String, Set<Item>>	titleMap;
@@ -32,7 +32,6 @@ public abstract class Storage
 	
 	
 	// General Methods
-	
 	public abstract int compareTo(Storage other);
 	
 	private void addToSetMap(Map<String, Set<Item>> disMap, Item disValue, String... disKey)
@@ -57,7 +56,6 @@ public abstract class Storage
 	
 	
 	// Contents methods
-	
 	public Collection<Item> contentsForKeyword(String keyword)
 	{
 		// TODO return items in this level only, which fit the kw
@@ -121,12 +119,20 @@ public abstract class Storage
 		if (folders.isEmpty()) return true;
 		else return false;
 	}
+	
 	public Collection<Folder> getSubfolders()
 	{
 		return folders;
 	}
-	public Folder newSubfolder(String lbl)
+	
+	public Folder newSubfolder(String lbl) throws Exception
 	{
+		for(Folder f: folders)
+			if (f.getLabel().equals(lbl))
+			{
+				Exception exists = new Exception("A folder of that name already exists");
+				throw exists;
+			}
 		Folder nf = new Folder(location, lbl);
 		folders.add(nf);
 		return nf;

@@ -1,6 +1,7 @@
 package cabinet;
 
 import java.io.File;
+import java.io.PrintStream;
 import java.util.*;
 
 public abstract class Storage
@@ -34,6 +35,11 @@ public abstract class Storage
 	// General Methods
 	public abstract int compareTo(Storage other);
 	
+	public String toString()
+	{
+		return label;
+	}
+	
 	private void addToSetMap(Map<String, Set<Item>> disMap, Item disValue, String... disKey)
 	{
 		for(String k: disKey)
@@ -53,6 +59,25 @@ public abstract class Storage
 		}
 	}
 	
+	public void printAll(PrintStream out)
+	{
+		if (this.hasSubfolders())
+		{
+			out.println("Directories for " + label);
+			for(Folder f: this.getSubfolders())
+			{
+				out.println(f.toString());
+				f.printAll(out);
+			}
+		}
+		if (this.hasContents())
+		{
+			out.println("Contents in " + label);
+			for(Item i: this.getContents())
+				out.println(i.toString());
+		}
+	}
+	
 	
 	
 	// Contents methods
@@ -66,6 +91,12 @@ public abstract class Storage
 	{
 		// TODO return all items in Cabinet which fit the kw
 		return null;
+	}
+	
+	public Boolean hasContents()
+	{
+		if (contents.isEmpty()) return true;
+		else return false;
 	}
 	
 	public List<Item> getContents()

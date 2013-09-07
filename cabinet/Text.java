@@ -59,8 +59,7 @@ public class Text
 	@Override
 	public String toString()
 	{
-		//TODO the toString
-		return null;
+		return this.getTitle();
 	}
 	
 	@Override

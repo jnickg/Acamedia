@@ -7,13 +7,15 @@ import java.util.Collection;
 import cabinet.*;
 
 public class CabinetTest {
-	
-	private static File			homedir		= new File("C:\\Users\\Nick\\Desktop\\TestFldr");
-	private static Cabinet		cab			= new Cabinet(homedir, "Cabinet");
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		PrintStream		out		= System.out;	// we will be printing to the standard output stream
+		File			homedir	= new File("C:\\Users\\Nick\\Desktop\\TestFldr"); // test folder on the desktop
+		
+		Item			item;
+		
+		Cabinet			cab		= new Cabinet(homedir, "cab", out);
+		cab.printAll(out);
 	}
 
 }

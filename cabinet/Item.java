@@ -31,7 +31,7 @@ public abstract class Item
 	/* Constructors */
 	Item(String tit, File loc)
 	{
-		title = "";
+		title = tit;
 		
 		tags = new TreeSet<>();
 		tags.add(notag);

@@ -14,7 +14,7 @@ public abstract class Storage
 	
 	private Map<String, Set<Item>>	uuidMap; // Allows key collisions by storing Items in a Set
 	private Map<String, Set<Item>>	titleMap;
-	private Map<String, Set<Item>>	tagMap;
+	//private Map<String, Set<Item>>	tagMap;
 	
 	
 	// Constructors

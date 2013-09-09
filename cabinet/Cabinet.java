@@ -7,7 +7,8 @@ public class Cabinet
 		extends Storage
 {
 	
-	public Cabinet(File loc, String lbl, PrintStream out) {
+	public Cabinet(File loc, String lbl, PrintStream out)
+	{
 		super(loc, lbl);
 		
 		File l = this.getLocation();
@@ -17,13 +18,17 @@ public class Cabinet
 			{
 				if (f.isDirectory())
 				{
-					try	{this.newSubfolder(f.getName());}
-					catch (Exception e) {out.println(e.getMessage());}
+					try	
+					{
+						newSubfolder(f.getName());
+					}
+					catch(Exception e)
+					{
+						out.println(e.getMessage());
+					}
 				}
 				else if(f.isFile())
-					this.newText(f.getName(), f, "publisher", "publisher city", 2013, "n/a", "1337");
-				else {}
-				
+					newText(f.getName(), f, "publisher", "publisher city", 2013, "n/a", "1337");
 			}
 		}
 	}

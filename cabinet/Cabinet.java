@@ -12,7 +12,7 @@ public class Cabinet
 		super(loc, lbl);
 		
 		File l = this.getLocation();
-		if(l.isDirectory())
+		if (l.isDirectory())
 		{
 			for(File f: l.listFiles())
 			{
@@ -27,7 +27,7 @@ public class Cabinet
 						out.println(e.getMessage());
 					}
 				}
-				else if(f.isFile())
+				else if (f.isFile())
 					newText(f.getName(), f, "publisher", "publisher city", 2013, "n/a", "1337");
 			}
 		}

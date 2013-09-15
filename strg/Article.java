@@ -1,4 +1,4 @@
-package cabinet;
+package strg;
 
 import java.io.File;
 import java.util.*;

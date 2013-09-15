@@ -1,6 +1,7 @@
-import cabinet.*;
 import java.io.File;
 import java.io.PrintStream;
+
+import strg.*;
 
 public class CabinetTest
 {

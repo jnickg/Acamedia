@@ -1,4 +1,4 @@
-package cabinet;
+package strg;
 
 // TODO Clean up imports!
 import java.util.*;

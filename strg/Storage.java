@@ -59,22 +59,22 @@ public abstract class Storage
 		}
 	}
 	
-	public void printAll(PrintStream out)
+	public void printAll(PrintStream out, String indent)
 	{
 		if (this.hasSubfolders())
 		{
-			out.println("Directories for " + label);
+			out.println(indent + "Directories for " + label);
 			for(Folder f: this.getSubfolders())
 			{
-				out.println(f.toString());
-				f.printAll(out);
+				out.println(indent + "\t" + f.toString() + "\\");
+				f.printAll(out, indent + "\t");
 			}
 		}
 		if (this.hasContents())
 		{
-			out.println("Contents in " + label);
+			out.println(indent + "Contents in " + label);
 			for(Item i: this.getContents())
-				out.println(i.toString());
+				out.println(indent + "\t" + i.toString());
 		}
 	}
 	
@@ -95,8 +95,8 @@ public abstract class Storage
 	
 	public Boolean hasContents()
 	{
-		if (contents.isEmpty()) return true;
-		else return false;
+		if (contents.isEmpty()) return false;
+		else return true;
 	}
 	
 	public List<Item> getContents()
@@ -147,8 +147,8 @@ public abstract class Storage
 	
 	public Boolean hasSubfolders()
 	{
-		if (folders.isEmpty()) return true;
-		else return false;
+		if (folders.isEmpty()) return false;
+		else return true;
 	}
 	
 	public Collection<Folder> getSubfolders()
@@ -156,7 +156,7 @@ public abstract class Storage
 		return folders;
 	}
 	
-	public Folder newSubfolder(String lbl) throws Exception
+	public Folder newSubfolder(String lbl, PrintStream out) throws Exception
 	{
 		for(Folder f: folders)
 			if (f.getLabel().equals(lbl))
@@ -164,7 +164,7 @@ public abstract class Storage
 				Exception exists = new Exception("A folder of that name already exists");
 				throw exists;
 			}
-		Folder nf = new Folder(location, lbl);
+		Folder nf = new Folder(location, lbl, out);
 		folders.add(nf);
 		return nf;
 	}

@@ -16,6 +16,6 @@ public class CabinetTest
 		out.println("CLASSPATH: " + System.getProperty("java.class.path"));
 		
 		Cabinet	cab	= new Cabinet(homedir, "cab", out);
-		cab.printAll(out);
+		cab.printAll(out, "");
 	}
 }

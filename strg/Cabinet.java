@@ -20,7 +20,7 @@ public class Cabinet
 				{
 					try	
 					{
-						newSubfolder(f.getName());
+						newSubfolder(f.getName(), out);
 					}
 					catch(Exception e)
 					{
@@ -28,7 +28,10 @@ public class Cabinet
 					}
 				}
 				else if (f.isFile())
+				{
 					newText(f.getName(), f, "publisher", "publisher city", 2013, "n/a", "1337");
+				}
+				
 			}
 		}
 	}

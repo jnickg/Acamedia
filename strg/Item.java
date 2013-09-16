@@ -38,7 +38,7 @@ public abstract class Item
 		
 		type = "n/a";
 		
-		file = new File(loc, tit);
+		file = loc;
 		
 		uuid = UUID.randomUUID().toString();
 	}
@@ -52,7 +52,7 @@ public abstract class Item
 		
 		type = "n/a";
 		
-		file = new File(loc, tit);
+		file = loc;
 		
 		uuid = UUID.randomUUID().toString();
 	}
@@ -175,9 +175,17 @@ public abstract class Item
 		file = f;
 	}
 	
-	public void openFile() throws IOException
+	public void openFile(PrintStream out)
 	{
-		Desktop.getDesktop().open(file);
+		try
+		{
+			out.println(file.toString());
+			Desktop.getDesktop().open(file);
+		}
+		catch(IOException e)
+		{
+			out.println(e.getMessage());
+		}
 	}
 
 	/* UUID Methods */

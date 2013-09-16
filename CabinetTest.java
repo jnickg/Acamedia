@@ -18,5 +18,10 @@ public class CabinetTest
 		
 		Cabinet	cab	= new Cabinet(homedir, "cab", out);
 		cab.printAll(out);
+		
+		for(Item i: cab.allContentsForTitle("Delbanco.pdf"))
+		{
+			i.openFile(out);
+		}
 	}
 }

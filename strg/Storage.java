@@ -129,6 +129,33 @@ public abstract class Storage
 		return null;
 	}
 	
+	public Collection<Item> contentsForTitle(String title)
+	{
+		return titleMap.get(title);
+//		if(titleMap.containsKey(title)) return titleMap.get(title);
+//		else return null;
+	}
+	
+	public Collection<Item> allContentsForTitle(String title)
+	{
+		List<Item> rtn = new ArrayList<>();
+		
+		// Add all for title on this level
+		Collection<Item> toadd = contentsForTitle(title);
+		if (!(toadd==null)) rtn.addAll(toadd);
+		
+		// If there are deeper levels, add all for those levels
+		if (this.hasSubfolders())
+		{
+			for(Folder f: this.getSubfolders())
+			{
+				rtn.addAll(f.allContentsForTitle(title));
+			}
+		}
+		
+		return rtn;
+	}
+	
 	public Boolean hasContents()
 	{
 		if (contents.isEmpty()) return false;

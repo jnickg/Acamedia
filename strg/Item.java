@@ -179,7 +179,7 @@ public abstract class Item
 	{
 		try
 		{
-			out.println(file.toString());
+			out.println("OPENING FILE\n\t" + file.toString());
 			Desktop.getDesktop().open(file);
 		}
 		catch(IOException e)

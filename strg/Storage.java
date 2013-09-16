@@ -19,7 +19,7 @@ public abstract class Storage
 	
 	// Constructors
 	
-	public Storage(File loc, String lbl)
+	public Storage(File loc, String lbl, PrintStream out)
 	{
 		label = lbl;
 		location = new File(loc, lbl);
@@ -28,12 +28,42 @@ public abstract class Storage
 		
 		uuidMap = new HashMap<>();
 		titleMap = new HashMap<>();
+		
+		autoDetectSubs(out);
 	}
 	
-	
+	private void autoDetectSubs(PrintStream out)
+	{
+		File l = this.getLocation();
+		if (l.isDirectory())
+		{
+			for(File f: l.listFiles())
+			{
+				if (f.isDirectory())
+				{
+					try	
+					{
+						newSubfolder(f.getName(), out);
+					}
+					catch(Exception e)
+					{
+						out.println(e.getMessage());
+					}
+				}
+				else if (f.isFile())
+				{
+					newItem(f);
+				}
+				
+			}
+		}		
+	}
 	
 	// General Methods
-	public abstract int compareTo(Storage other);
+	public int compareTo(Storage other)
+	{
+		return this.getLabel().compareTo(other.getLabel());
+	}
 	
 	public String toString()
 	{
@@ -59,22 +89,28 @@ public abstract class Storage
 		}
 	}
 	
+	public void printAll(PrintStream out)
+	{
+		printAll(out, "");
+	}
+	
 	public void printAll(PrintStream out, String indent)
 	{
-		if (this.hasSubfolders())
-		{
-			out.println(indent + "Directories for " + label);
-			for(Folder f: this.getSubfolders())
-			{
-				out.println(indent + "\t" + f.toString() + "\\");
-				f.printAll(out, indent + "\t");
-			}
-		}
+		out.println(indent + label + "\\");
 		if (this.hasContents())
 		{
-			out.println(indent + "Contents in " + label);
+			out.println(indent + "  [Contents:]");
 			for(Item i: this.getContents())
-				out.println(indent + "\t" + i.toString());
+				out.println(indent + "    " + i.toString());
+		}
+		if (this.hasSubfolders())
+		{
+			out.println(indent + "  [Directories:]");
+			for(Folder f: this.getSubfolders())
+			{
+				//out.println(indent + "    " + f.toString() + "\\");
+				f.printAll(out, indent + "    ");
+			}
 		}
 	}
 	
@@ -172,8 +208,14 @@ public abstract class Storage
 	
 	
 	// New Item Methods
+	public Item newItem(File f)
+	{
+		//TODO make this call the correct item
+		Item new1 = newText(f.getName(), f, "publisher", "publisher city", 2013, "n/a", "1337");
+		return new1;
+	}
 	
-	public Item newText(String tit, File loc, String pub, String pbc,
+	private Item newText(String tit, File loc, String pub, String pbc,
 			Integer yr,	String typ,	String isbn)
 	{
 		// Create the basic Text
@@ -196,7 +238,7 @@ public abstract class Storage
 		return new1;
 	}
 	
-	public Item newArticle(String tit, File loc, String pub, String pbc,
+	private Item newArticle(String tit, File loc, String pub, String pbc,
 			Integer yr,	String typ,	String isbn, String ... cntrb)
 	{
 		Article new1 = new Article(tit, loc);

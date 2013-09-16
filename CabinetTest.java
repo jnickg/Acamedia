@@ -12,10 +12,11 @@ public class CabinetTest
 		//Item			item;
 		PrintStream		out		= System.out;	// we will be printing to the standard output stream
 		File				homedir	= new File("C:\\Users\\Nick\\Desktop\\TestFldr"); // test folder on the desktop
+		//File				homedir = new File("C:\\Users\\Nick\\Dropbox\\");
 		
-		out.println("CLASSPATH: " + System.getProperty("java.class.path"));
+		//out.println("CLASSPATH: " + System.getProperty("java.class.path"));
 		
 		Cabinet	cab	= new Cabinet(homedir, "cab", out);
-		cab.printAll(out, "");
+		cab.printAll(out);
 	}
 }

@@ -37,25 +37,6 @@ public class Text
 	
 	/* General Methods */
 	
-	// Implementation of the Comparable interface is required to sort
-	// items correctly, based on title, year, and then publisher
-//	@Override
-//	public int compareTo(Text other)
-//	{
-//		int title  = this.getTitle().compareTo(other.getTitle());
-//		if (title==0)
-//		{
-//			int yr = this.getYear().compareTo(other.getYear());
-//			if (yr==0)
-//			{
-//				return this.getPublisher().compareTo(other.getPublisher());
-//				
-//			}
-//			else return yr;
-//		}
-//		else return title;
-//	}
-	
 	@Override
 	public String toString()
 	{

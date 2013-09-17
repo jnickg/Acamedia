@@ -187,6 +187,11 @@ public abstract class Item
 			out.println(e.getMessage());
 		}
 	}
+	
+	public void saveFile(PrintStream out)
+	{
+		out.println("Saving the file '" + this.getTitle() + "'\n\tto path '" + this.getFile().toString() + "'");
+	}
 
 	/* UUID Methods */
 	public String getUUID()

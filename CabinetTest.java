@@ -5,8 +5,6 @@ import strg.*;
 
 public class CabinetTest
 {
-	
-	
 	public static void main(String[] args)
 	{
 		//Item			item;
@@ -23,5 +21,7 @@ public class CabinetTest
 		{
 			i.openFile(out);
 		}
+		
+		cab.saveAll(out);
 	}
 }

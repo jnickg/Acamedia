@@ -11,5 +11,5 @@ public class Folder
 	{
 		super(loc, lbl, out);
 	}
-	
+
 }

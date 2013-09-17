@@ -8,9 +8,11 @@ public abstract class Storage
 		implements Comparable<Storage>
 {
 	private	String					label; // Used both to name the storage and specify its location
-	private final File				location; // The location of the storage
-	private	List<Item>				contents; // Items held directly inside the storage
+	private	File					location; // The location of the storage
+	private	Set<Item>				contents; // Items held directly inside the storage
 	private	Set<Folder>				folders; // All labels must be unique
+	
+	private Set<String>				fldrLblMap;
 	
 	private Map<String, Set<Item>>	uuidMap; // Allows key collisions by storing Items in a Set
 	private Map<String, Set<Item>>	titleMap;
@@ -23,24 +25,43 @@ public abstract class Storage
 	{
 		label = lbl;
 		location = new File(loc, lbl);
-		contents = new ArrayList<>();
+		contents = new TreeSet<>();
 		folders = new TreeSet<>();
 		
+		fldrLblMap = new HashSet<>();
 		uuidMap = new HashMap<>();
 		titleMap = new HashMap<>();
 		
 		autoDetectSubs(out);
 	}
 	
+	// General methods
+	protected void saveAll(PrintStream out)
+	{
+		// Save own-level contents
+		for(Item i: contents)
+		{
+			i.saveFile(out);
+		}
+		
+		// invoke save method for each folder
+		for(Folder f: folders)
+		{
+			f.saveAll(out);
+		}
+	}
+	
 	private void autoDetectSubs(PrintStream out)
 	{
 		File l = this.getLocation();
+		// Just to be safe
 		if (l.isDirectory())
 		{
 			for(File f: l.listFiles())
 			{
 				if (f.isDirectory())
 				{
+					// same-name folders not allowed
 					try	
 					{
 						newSubfolder(f.getName(), out);
@@ -56,10 +77,14 @@ public abstract class Storage
 				}
 				
 			}
-		}		
+		}
+		// Shouldn't happen; this location is actually a file
+		else
+		{
+			out.println("This storage is actually a FILE!");
+		}
 	}
 	
-	// General Methods
 	public int compareTo(Storage other)
 	{
 		return this.getLabel().compareTo(other.getLabel());
@@ -162,7 +187,7 @@ public abstract class Storage
 		else return true;
 	}
 	
-	public List<Item> getContents()
+	public Set<Item> getContents()
 	{
 		return contents;
 	}
@@ -221,14 +246,20 @@ public abstract class Storage
 	
 	public Folder newSubfolder(String lbl, PrintStream out) throws Exception
 	{
-		for(Folder f: folders)
-			if (f.getLabel().equals(lbl))
-			{
-				Exception exists = new Exception("A folder of that name already exists");
-				throw exists;
-			}
+		// Check whether a folder with that name exists
+		if (fldrLblMap.contains(lbl))
+		{
+			Exception exists = new Exception("A folder of that name already exists");
+			throw exists;			
+		}
+		
+		// Create new folder with given properties
 		Folder nf = new Folder(location, lbl, out);
+		
+		// Add new folder to appropriate maps
 		folders.add(nf);
+		fldrLblMap.add(lbl);
+		
 		return nf;
 	}
 	
@@ -237,8 +268,11 @@ public abstract class Storage
 	// New Item Methods
 	public Item newItem(File f)
 	{
-		//TODO make this call the correct item
+		//TODO Detect item type based on file metadata
+		
+		//TODO Create appropriate item
 		Item new1 = newText(f.getName(), f, "publisher", "publisher city", 2013, "n/a", "1337");
+		
 		return new1;
 	}
 	

@@ -1,13 +1,18 @@
 package strg;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import com.itextpdf.text.pdf.PdfReader;
 
 public class Text
 		extends Item
 {
 	/* Variable Members */
+	private		PdfReader	pdf;
 	private		String		publisher, publisherCity;
 	private		String		isbn;
 	private		Integer		year;
@@ -92,4 +97,33 @@ public class Text
 	}
 	
 
+	/* PDF Methods */
+//	public PdfReader pullPdf(File f)
+//	{
+//		PdfReader pdef;
+//		try
+//		{
+//			pdef = new PdfReader(this.getFile().toString());
+//		}
+//		catch(IOException e)
+//		{
+//			pdef = null;
+//		}
+//		return pdef;
+//	}
+//	
+//	public void pullPdfMetadata(Map<String, String> nfo)
+//	{
+//		if(nfo.containsKey("Publisher")) this.publisher = nfo.get("Publisher");
+//		else this.publisher = "unknown";
+//		
+//		if(nfo.containsKey("Publisher City")) this.publisherCity = nfo.get("Publisher City");
+//		else this.publisherCity = "unknown";
+//		
+//		if(nfo.containsKey("ISBN")) this.isbn = nfo.get("ISBN");
+//		else this.isbn = "unknown";
+//		
+//		if(nfo.containsKey("Year")) this.year = Integer.parseInt(nfo.get("Year"));
+//		else this.year = 0;
+//	}
 }

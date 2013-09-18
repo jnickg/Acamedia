@@ -5,11 +5,14 @@ import strg.*;
 
 public class CabinetTest
 {
+	static	File			homedir	= new File("C:\\Users\\Nick\\Desktop\\TestFldr"); // test folder on the desktop
+	static	PrintStream		out		= System.out;	// we will be printing to the standard output stream
+	
 	public static void main(String[] args)
 	{
 		//Item			item;
-		PrintStream		out		= System.out;	// we will be printing to the standard output stream
-		File				homedir	= new File("C:\\Users\\Nick\\Desktop\\TestFldr"); // test folder on the desktop
+		
+		
 		//File				homedir = new File("C:\\Users\\Nick\\Dropbox\\");
 		
 		//out.println("CLASSPATH: " + System.getProperty("java.class.path"));

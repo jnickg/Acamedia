@@ -1,4 +1,4 @@
-package strg;
+package net.jnickg.acamedia.fil;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class Text
 	// TODO Add other members for citation data
 	
 	/* Constructors */
-	Text(String tit, File loc)
+	public Text(String tit, File loc)
 	{
 		super(tit, loc);
 		publisher = "";
@@ -28,7 +28,7 @@ public class Text
 		isbn = "";
 	}
 	
-	Text(String tit, File loc, String mkr, String pbc, Integer yr,
+	public Text(String tit, File loc, String mkr, String pbc, Integer yr,
 			String isbn, String ... tgs)
 	{
 		super(tit, loc, tgs);

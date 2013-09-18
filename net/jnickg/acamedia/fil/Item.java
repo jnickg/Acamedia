@@ -1,4 +1,4 @@
-package strg;
+package net.jnickg.acamedia.fil;
 
 // TODO Clean up imports!
 import java.util.*;

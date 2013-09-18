@@ -1,4 +1,4 @@
-package strg;
+package net.jnickg.acamedia.strg;
 
 import java.io.File;
 import java.io.PrintStream;

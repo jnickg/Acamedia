@@ -1,7 +1,9 @@
+package net.jnickg.acamedia;
 import java.io.File;
 import java.io.PrintStream;
 
-import strg.*;
+import net.jnickg.acamedia.fil.Item;
+import net.jnickg.acamedia.strg.*;
 
 public class CabinetTest
 {

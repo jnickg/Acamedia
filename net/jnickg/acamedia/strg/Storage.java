@@ -1,8 +1,12 @@
-package strg;
+package net.jnickg.acamedia.strg;
 
 import java.io.File;
 import java.io.PrintStream;
 import java.util.*;
+
+import net.jnickg.acamedia.fil.Article;
+import net.jnickg.acamedia.fil.Item;
+import net.jnickg.acamedia.fil.Text;
 
 public abstract class Storage
 		implements Comparable<Storage>

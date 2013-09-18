@@ -1,4 +1,4 @@
-package strg;
+package net.jnickg.acamedia.fil;
 
 import java.io.File;
 import java.util.*;

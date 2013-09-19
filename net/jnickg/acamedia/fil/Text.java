@@ -12,7 +12,8 @@ public class Text
 		extends Item
 {
 	/* Variable Members */
-	private		PdfReader	pdf;
+	//private		PdfReader	pdfR;
+	//private		PdfWriter	pdfW;
 	private		String		publisher, publisherCity;
 	private		String		isbn;
 	private		Integer		year;

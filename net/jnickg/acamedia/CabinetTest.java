@@ -1,8 +1,9 @@
 package net.jnickg.acamedia;
 import java.io.File;
 import java.io.PrintStream;
+import java.util.Set;
 
-import net.jnickg.acamedia.fil.Item;
+import net.jnickg.acamedia.fil.*;
 import net.jnickg.acamedia.strg.*;
 
 public class CabinetTest
@@ -22,11 +23,22 @@ public class CabinetTest
 		Cabinet	cab	= new Cabinet(homedir, "cab", out);
 		cab.printAll(out);
 		
-		for(Item i: cab.allContentsForTitle("Delbanco.pdf"))
+		Set<Item> cabcnts = cab.getContents();
+		for(Item i: cabcnts)
 		{
-			i.openFile(out);
+			out.println("TESTING NEW PDF FILE");
+			out.println(i.getFile().toString());
+			PdfFile test = new PdfFile(i.getFile().toString(), out);
+			out.print("\n\n");
 		}
 		
-		cab.saveAll(out);
+//		for(Item i: cab.allContentsForTitle("Delbanco.pdf"))
+//		{
+//			i.openFile(out);
+//		}
+//		
+//		cab.saveAll(out);
+		
+		PdfFile test = new PdfFile("C:\\Users\\Nick\\Desktop\\TestFldr\\cab\\Delbanco.pdf", out);
 	}
 }

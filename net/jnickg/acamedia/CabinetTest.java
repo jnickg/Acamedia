@@ -39,6 +39,6 @@ public class CabinetTest
 //		
 //		cab.saveAll(out);
 		
-		PdfFile test = new PdfFile("C:\\Users\\Nick\\Desktop\\TestFldr\\cab\\Delbanco.pdf", out);
+		//PdfFile test = new PdfFile("C:\\Users\\Nick\\Desktop\\TestFldr\\cab\\Delbanco.pdf", out);
 	}
 }

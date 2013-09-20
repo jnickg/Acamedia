@@ -24,9 +24,22 @@ public class PdfFile
 			}
 			out.println(reader.getPdfVersion());
 		}
-		catch(IOException e)
+		catch(Exception e)
 		{
+			out.println("SOMETHING WENT WRONG!!! EXCEPTION");
 			out.println(e.getMessage());
+			out.println(e.getLocalizedMessage());
+			out.println(e.getCause().toString());
+			out.println(e.getStackTrace().toString());
+		}
+		catch(Error e)
+		{
+			out.println("SOMETHING WENT WRONG!!! ERROR");
+			out.println(e.getMessage());
+			out.println(e.getLocalizedMessage());
+			out.println(e.getCause().toString());
+			out.println(e.getStackTrace().toString());
+
 		}
 	}
 }

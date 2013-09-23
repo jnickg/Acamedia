@@ -36,7 +36,9 @@ public abstract class Storage
 		uuidMap = new HashMap<>();
 		titleMap = new HashMap<>();
 		
-		autoDetectSubs(out);
+		if(!location.exists()) location.mkdir();
+		// Just to be safe
+		if (location.isDirectory()) autoDetectSubs(out, location);
 	}
 	
 	// General methods
@@ -53,39 +55,30 @@ public abstract class Storage
 		{
 			f.saveAll(out);
 		}
+		
 	}
 	
-	private void autoDetectSubs(PrintStream out)
+	private void autoDetectSubs(PrintStream out, File l)
 	{
-		File l = this.getLocation();
-		// Just to be safe
-		if (l.isDirectory())
+		for(File f: l.listFiles())
 		{
-			for(File f: l.listFiles())
+			if (f.isDirectory())
 			{
-				if (f.isDirectory())
+				// same-name folders not allowed
+				try	
 				{
-					// same-name folders not allowed
-					try	
-					{
-						newSubfolder(f.getName(), out);
-					}
-					catch(Exception e)
-					{
-						out.println(e.getMessage());
-					}
+					newSubfolder(f.getName(), out);
 				}
-				else if (f.isFile())
+				catch(Exception e)
 				{
-					newItem(f);
+					out.println(e.getMessage());
 				}
-				
 			}
-		}
-		// Shouldn't happen; this location is actually a file
-		else
-		{
-			out.println("This storage is actually a FILE!");
+			else if (f.isFile())
+			{
+				newItem(f);
+			}
+			
 		}
 	}
 	

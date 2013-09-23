@@ -20,17 +20,17 @@ public class CabinetTest
 		
 		//out.println("CLASSPATH: " + System.getProperty("java.class.path"));
 		
-		Cabinet	cab	= new Cabinet(homedir, "cab", out);
+		Cabinet	cab	= new Cabinet(homedir, "cab2", out);
 		cab.printAll(out);
 		
-		Set<Item> cabcnts = cab.getContents();
-		for(Item i: cabcnts)
-		{
-			out.println("TESTING NEW PDF FILE");
-			out.println(i.getFile().toString());
-			PdfFile test = new PdfFile(i.getFile().toString(), out);
-			out.print("\n\n");
-		}
+//		Set<Item> cabcnts = cab.getContents();
+//		for(Item i: cabcnts)
+//		{
+//			out.println("TESTING NEW PDF FILE");
+//			out.println(i.getFile().toString());
+//			PdfFile test = new PdfFile(i.getFile().toString(), out);
+//			out.print("\n\n");
+//		}
 		
 //		for(Item i: cab.allContentsForTitle("Delbanco.pdf"))
 //		{

@@ -13,15 +13,21 @@ Acamedia has the following capabilities:
 	*Data needed for academic citations
 	*In-document data, such as academic keywords
 	*User-created data, such as tagging, for personalized keywording
-*Manually organize your documents into "folders"
-*Store your folders inside your academic filing "cabinet."
+*Manually organize your documents by project, subject, etc.
+*Store your folders inside your academic filing cabinet
+	*Import new documents into your cabinet
+	*Automatically load one or many cabinets
 
 -----
 
 Acamedia will have the following capabilities:
 
+*Automatic metadata—Acamedia will interact with the WorldCat search API
+	*fetch metadata for new documents
+	*save it into your PDF file for immediate retrieval, next time you load
+	*check existing document data
 *Hover tags—see metadata for your document without even opening it
-*Give you an easy-to-use citation for any of your documents
+*TeX-formatted citations which can easily be changed to APA, MLA, Chicago, etc.
 *Assemble documents for use in a project
 	*Batch print them
 	*Generate a citation page for all documents
@@ -29,9 +35,6 @@ Acamedia will have the following capabilities:
 *Different file formats
 	*Store your professors' syllabi and assignment documents
 	*Store images, audio, or video files
-*Rails app backend that interacts w/ WorldCat
-	*Search new additions to the library
-	*Attempt to pull information automatically (so you don't have to enter things like ISBN, journal, etc)
 
 -----
 

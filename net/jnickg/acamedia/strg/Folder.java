@@ -7,9 +7,9 @@ public class Folder
 		extends Storage
 {
 
-	public Folder(File loc, String lbl, PrintStream out)
+	public Folder(File loc, String lbl)
 	{
-		super(loc, lbl, out);
+		super(loc, lbl);
 	}
 
 }

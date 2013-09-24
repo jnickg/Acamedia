@@ -16,32 +16,31 @@ public abstract class Storage
 	private	Set<Item>				contents; // Items held directly inside the storage
 	private	Set<Folder>				folders; // All labels must be unique
 	
-	private Set<String>				fldrLblMap;
 	
 	private Map<String, Set<Item>>	uuidMap; // Allows key collisions by storing Items in a Set
 	private Map<String, Set<Item>>	titleMap;
 	//private Map<String, Set<Item>>	tagMap;
 	
 	
-	// Constructors
-	
-	public Storage(File loc, String lbl, PrintStream out)
+	/* Constructors */
+	public Storage(File loc, String lbl)
 	{
 		label = lbl;
+		
 		location = new File(loc, lbl);
+		if(!location.exists()) location.mkdir();
+		
 		contents = new TreeSet<>();
+		
 		folders = new TreeSet<>();
 		
-		fldrLblMap = new HashSet<>();
-		uuidMap = new HashMap<>();
-		titleMap = new HashMap<>();
 		
-		if(!location.exists()) location.mkdir();
-		// Just to be safe
-		if (location.isDirectory()) autoDetectSubs(out, location);
+		uuidMap = new HashMap<>();
+		
+		titleMap = new HashMap<>();
 	}
 	
-	// General methods
+	/* General methods */
 	protected void saveAll(PrintStream out)
 	{
 		// Save own-level contents
@@ -58,27 +57,18 @@ public abstract class Storage
 		
 	}
 	
-	private void autoDetectSubs(PrintStream out, File l)
+	public void autoDetectSubs(PrintStream out)
 	{
-		for(File f: l.listFiles())
+		for(File f: location.listFiles())
 		{
 			if (f.isDirectory())
 			{
-				// same-name folders not allowed
-				try	
-				{
-					newSubfolder(f.getName(), out);
-				}
-				catch(Exception e)
-				{
-					out.println(e.getMessage());
-				}
+				newSubfolder(f.getName()).autoDetectSubs(out);;
 			}
 			else if (f.isFile())
 			{
 				newItem(f);
 			}
-			
 		}
 	}
 	
@@ -116,7 +106,7 @@ public abstract class Storage
 		printAll(out, "");
 	}
 	
-	public void printAll(PrintStream out, String indent)
+	protected void printAll(PrintStream out, String indent)
 	{
 		out.println(indent + label + "\\");
 		if (this.hasContents())
@@ -241,21 +231,13 @@ public abstract class Storage
 		return folders;
 	}
 	
-	public Folder newSubfolder(String lbl, PrintStream out) throws Exception
-	{
-		// Check whether a folder with that name exists
-		if (fldrLblMap.contains(lbl))
-		{
-			Exception exists = new Exception("A folder of that name already exists");
-			throw exists;			
-		}
-		
+	public Folder newSubfolder(String lbl)
+	{	
 		// Create new folder with given properties
-		Folder nf = new Folder(location, lbl, out);
+		Folder nf = new Folder(location, lbl);
 		
 		// Add new folder to appropriate maps
 		folders.add(nf);
-		fldrLblMap.add(lbl);
 		
 		return nf;
 	}

@@ -20,7 +20,9 @@ public class CabinetTest
 		
 		//out.println("CLASSPATH: " + System.getProperty("java.class.path"));
 		
-		Cabinet	cab	= new Cabinet(homedir, "cab2", out);
+		Cabinet	cab	= new Cabinet(homedir, "cab");
+		cab.printAll(out);
+		cab.autoDetectSubs(out);
 		cab.printAll(out);
 		
 //		Set<Item> cabcnts = cab.getContents();

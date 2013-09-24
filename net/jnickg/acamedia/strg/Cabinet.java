@@ -10,9 +10,9 @@ public class Cabinet
 		extends Storage
 {
 	
-	public Cabinet(File loc, String lbl, PrintStream out)
+	public Cabinet(File loc, String lbl)
 	{
-		super(loc, lbl, out);
+		super(loc, lbl);
 	}
 	
 	@Override

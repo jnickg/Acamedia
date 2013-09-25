@@ -9,36 +9,34 @@ import net.jnickg.acamedia.fil.Item;
 import net.jnickg.acamedia.fil.Text;
 
 public abstract class Storage
-		implements Comparable<Storage>
+		extends File
 {
-	private	String					label; // Used both to name the storage and specify its location
-	private	File					location; // The location of the storage
+	// For implementation of Serializable interface
+	private static final long serialVersionUID = 1L;
+	
 	private	Set<Item>				contents; // Items held directly inside the storage
 	private	Set<Folder>				folders; // All labels must be unique
 	
-	
 	private Map<String, Set<Item>>	uuidMap; // Allows key collisions by storing Items in a Set
 	private Map<String, Set<Item>>	titleMap;
-	//private Map<String, Set<Item>>	tagMap;
-	
 	
 	/* Constructors */
-	public Storage(File loc, String lbl)
+	public Storage(File parent, String fldr)
 	{
-		label = lbl;
-		
-		location = new File(loc, lbl);
-		if(!location.exists()) location.mkdir();
-		
+		super(parent, fldr);
+		if(!this.exists()) this.mkdir();
+
 		contents = new TreeSet<>();
 		
 		folders = new TreeSet<>();
-		
 		
 		uuidMap = new HashMap<>();
 		
 		titleMap = new HashMap<>();
 	}
+	
+	
+	
 	
 	/* General methods */
 	protected void saveAll(PrintStream out)
@@ -48,38 +46,42 @@ public abstract class Storage
 		{
 			i.saveFile(out);
 		}
+	}
+	
+	protected void saveAllSubs(PrintStream out)
+	{
+		this.saveAll(out);
 		
 		// invoke save method for each folder
 		for(Folder f: folders)
 		{
 			f.saveAll(out);
 		}
-		
+	}
+	
+	public void autoDetect(PrintStream out)
+	{
+		File[] guts = this.listFiles();
+		for(File f: guts)
+		{
+			if(f.isDirectory()) addSubfolder(f.getName());
+			else if(f.isFile()) addItem(f);
+			
+		}
 	}
 	
 	public void autoDetectSubs(PrintStream out)
 	{
-		for(File f: location.listFiles())
+		this.autoDetect(out);
+		for(Folder f: folders)
 		{
-			if (f.isDirectory())
-			{
-				newSubfolder(f.getName()).autoDetectSubs(out);;
-			}
-			else if (f.isFile())
-			{
-				newItem(f);
-			}
+			f.autoDetectSubs(out);
 		}
 	}
 	
 	public int compareTo(Storage other)
 	{
-		return this.getLabel().compareTo(other.getLabel());
-	}
-	
-	public String toString()
-	{
-		return label;
+		return this.getName().compareTo(other.getName());
 	}
 	
 	private void addToSetMap(Map<String, Set<Item>> disMap, Item disValue, String... disKey)
@@ -108,7 +110,7 @@ public abstract class Storage
 	
 	protected void printAll(PrintStream out, String indent)
 	{
-		out.println(indent + label + "\\");
+		out.println(indent + this.getName() + "\\");
 		if (this.hasContents())
 		{
 			out.println(indent + "  [Contents:]");
@@ -128,7 +130,9 @@ public abstract class Storage
 	
 	
 	
-	// Contents methods
+	
+	/* Contents methods */
+	//TODO Revamp the contents methods
 	public Collection<Item> contentsForKeyword(String keyword)
 	{
 		// TODO return items in this level only, which fit the kw
@@ -196,30 +200,8 @@ public abstract class Storage
 	
 	
 	
-	// Label methods
 	
-	public String getLabel()
-	{
-		return label;
-	}
-	public void setLabel(String label)
-	{
-		this.label = label;
-	}
-	
-	
-	
-	// File methods
-	
-	public File getLocation()
-	{
-		return location;
-	}
-	
-	
-	
-	// Folders Methods
-	
+	/* Folders methods */
 	public Boolean hasSubfolders()
 	{
 		if (folders.isEmpty()) return false;
@@ -231,10 +213,10 @@ public abstract class Storage
 		return folders;
 	}
 	
-	public Folder newSubfolder(String lbl)
+	public Folder addSubfolder(String lbl)
 	{	
 		// Create new folder with given properties
-		Folder nf = new Folder(location, lbl);
+		Folder nf = new Folder(this.getAbsoluteFile(), lbl);
 		
 		// Add new folder to appropriate maps
 		folders.add(nf);
@@ -244,28 +226,23 @@ public abstract class Storage
 	
 	
 	
-	// New Item Methods
-	public Item newItem(File f)
+	
+	/* New Item Methods */
+	public Item addItem(File f)
 	{
-		//TODO Detect item type based on file metadata
+		//TODO Detect item type based on f and call correct sub
 		
-		//TODO Create appropriate item
-		Item new1 = newText(f.getName(), f, "publisher", "publisher city", 2013, "n/a", "1337");
+		// Create appropriate item
+		Item new1 = addText(f.getName(), f);
 		
 		return new1;
 	}
 	
-	private Item newText(String tit, File loc, String pub, String pbc,
-			Integer yr,	String typ,	String isbn)
+	private Item addText(String tit, File loc)
 	{
 		// Create the basic Text
 		Text new1 = new Text(tit, loc);
 		
-		// Add other data
-		new1.setType(typ);
-		new1.setISBN(isbn);
-		new1.setPublisher(pub, pbc);
-		new1.setYear(yr);
 		
 		// Add to master list(s)
 		contents.add(new1);
@@ -278,18 +255,10 @@ public abstract class Storage
 		return new1;
 	}
 	
-	private Item newArticle(String tit, File loc, String pub, String pbc,
-			Integer yr,	String typ,	String isbn, String ... cntrb)
+	private Item addArticle(String tit, File loc)
 	{
 		Article new1 = new Article(tit, loc);
 		
-		// Add other data
-		new1.setType(typ);
-		new1.setISBN(isbn);
-		new1.setContributors(cntrb);
-		new1.setPublisher(pub, pbc);
-		new1.setYear(yr);
-		
 		// Add to master list(s)
 		contents.add(new1);
 		
@@ -300,14 +269,4 @@ public abstract class Storage
 		// Return reference to new Text
 		return new1;
 	}
-	
-	
-	
-	// Sorting Methods
-	
-	public void sortContentsByTitle()
-	{
-		
-	}
-
 }

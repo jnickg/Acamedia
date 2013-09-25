@@ -1,7 +1,9 @@
 package net.jnickg.acamedia.strg;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
 import java.util.*;
 
 import net.jnickg.acamedia.fil.*;
@@ -229,18 +231,30 @@ public abstract class Storage
 	/* New Item Methods */
 	public Item addItem(File f)
 	{
-		//TODO Detect item type based on f and call correct sub
-		
-		// Create appropriate item
-		Item new1 = addPdfItem(f, f.getName());
-		
-		return new1;
+		try
+		{
+			Item new1;
+			//TODO test if this works
+			String ext = Files.probeContentType(f.toPath());
+			if(ext.equalsIgnoreCase("PDF"))
+					new1 = addPdfItem(f);
+			else
+					new1 = null;
+			return new1;
+				
+		}
+		catch(IOException e)
+		{
+			e.getMessage();
+			e.getStackTrace();
+			return null;
+		}
 	}
 	
-	private Item addPdfItem(File loc, String tit)
+	private Item addPdfItem(File f)
 	{
 		// Create the basic Text
-		Item new1 = new PdfItem(loc, tit);
+		Item new1 = new PdfItem(f, f.getName());
 		
 		
 		// Add to master list(s)
@@ -248,7 +262,7 @@ public abstract class Storage
 		
 		// Add to other maps
 		addToSetMap(uuidMap, new1, new1.getUUID());
-		addToSetMap(titleMap, new1, tit);
+		addToSetMap(titleMap, new1, f.getName());
 		
 		// Return reference to new Text
 		return new1;

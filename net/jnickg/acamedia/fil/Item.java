@@ -4,116 +4,95 @@ package net.jnickg.acamedia.fil;
 import java.util.*;
 import java.util.List;
 import java.io.*;
-import java.nio.file.Files;
 import java.awt.*;
 
 public abstract class Item
-	implements Comparable<Item>
+	extends File
 {
-	/* Variable Members */
-	private			String		title; // the name of the item
-	private			File		file; // the full location of the related file
+	// For implementation of Serializable interface
+	private static final long serialVersionUID = 1L;
 	
-	private			Set<String> tags; // user-input tags
-	private			String		type; // user-input type of item that it is (unrelated to its concrete Class)
-	private 		String		uuid; // universally unique identifier (deprecated)
+	/* Variable Members */
+	private			Map<String, String>	metadata; // stores the item's metadata for quick retrieval
+	private			Set<String> 		tags; // user-input tags
+	private			String				type; // user-input type of item that it is (unrelated to its concrete Class)
+	private			String				ftype; // file extension, if present
+	private 		String				uuid; // universally unique identifier (deprecated)
 	
 	private static final String notag = "none"; // used when there are no members for "tags"
-	private static	Set<String> types = new TreeSet<>(); // Stores built-in types of Items
-	static
-	{
-		types.add("literature");
-		types.add("course materials");
-		types.add("notes");
-		types.add("other");
-		types.add("n/a");
-	}
+			//	private static	Set<String> types = new TreeSet<>(); // Stores built-in types of Items
+			//	static
+			//	{
+			//		types.add("literature");
+			//		types.add("course materials");
+			//		types.add("notes");
+			//		types.add("other");
+			//		types.add("n/a");
+			//	}
 
 	/* Constructors */
-	Item(String tit, File loc)
+	Item(File loc, String tit)
 	{
-		title = tit;
+		super(loc, tit);
+		if(this.isFile())
+		{
+			String tmp = this.getName();
+			ftype = tmp.substring(tmp.lastIndexOf('.'));
+		}
+		
+		metadata = new HashMap<>();
 		
 		tags = new TreeSet<>();
 		tags.add(notag);
 		
-		type = "n/a";
-		
-		file = loc;
-		
-		uuid = UUID.randomUUID().toString();
+		uuid = UUID.randomUUID().toString(); //TODO make this UUID relevant to the file's data
 	}
 	
-	Item(String tit, File loc, String ... tgs)
-	{
-		title = tit;
-		
-		tags = new TreeSet<>();
-		for(String s: tgs) tags.add(s);
-		
-		type = "n/a";
-		
-		file = loc;
-		
-		uuid = UUID.randomUUID().toString();
-	}
 	
-	Item(String tit, File loc, String typ, String ... tgs)
-	{
-		title = tit;
-		
-		tags = new TreeSet<>();
-		for(String s: tgs) tags.add(s);
-		
-		type = typ;
-		types.add(typ);
-		
-		// puts the file in "loc" which is the location of the folder
-		// "fp" is the name of the file.
-		file = new File(loc, tit);
-		
-		uuid = UUID.randomUUID().toString();
-	}
+	
 	
 	/* General Methods */
-	
-	@Override
-	public abstract String toString();
-	
-	public abstract List<String> getCitation();
+	public List<String> getCitation()
+	{
+		// TODO use metadata to generate citation
+		return null;
+	}
 	
 	public int compareTo(Item other)
 	{
-		return this.getTitle().compareTo(other.getTitle());
+		return this.getName().compareTo(other.getName());
 	}
 	
-	// Deprecated
-	public boolean matchTag(String ... tgs)
+	
+	
+	
+	/* Metadata Methods */
+	public Map<String, String> getMetadata()
 	{
-		for(String s: tgs)	if(tags.contains(s.toLowerCase()))	return true;
-		return false;
+		return metadata;
 	}
-
-	/* Title Methods */
-	public String getTitle()
+	
+	public void setMetadata(Map<String, String> metadata)
 	{
-		return title;
+		this.metadata = metadata;
 	}
-
-	public void setTitle(String title)
+	
+	public void addMetadata(Map<String, String> metadata)
 	{
-		this.title = title;
+		metadata.putAll(metadata);
 	}
-
+	
+	
+	
+	
 	/* Tags Methods */
-	public Set<String>getTagSet()
+	public Set<String>getTags()
 	{
 		return tags;
 	}
 
-	// Returns an item's keywords as a single string, separated by
-	// commas.
-	public String getTags()
+	// Returns an item's keywords as a single string, separated by commas.
+	public String getTagstr()
 	{
 		Boolean first = true;
 		StringBuilder tgs = new StringBuilder();
@@ -144,6 +123,9 @@ public abstract class Item
 		return wasThere;
 	}
 	
+	
+	
+	
 	/* Type Methods */
 	public String getType()
 	{
@@ -153,47 +135,44 @@ public abstract class Item
 	public void setType(String type)
 	{
 		this.type = type;
-		types.add(type);
 	}
 	
-	public static Set<String> getTypes()
-	{
-		return types;
-	}
-	public static Boolean addType(String type)
-	{
-		return (types.add(type));
-	}
 	
-	/* Filepath Methods */
-	public File getFile()
-	{
-		return file;
-	}
 	
-	public void setFile(File f)
-	{
-		file = f;
-	}
 	
+	/* File Methods */
 	public void openFile(PrintStream out)
 	{
+		File dis = this.getAbsoluteFile();
 		try
 		{
-			out.println("OPENING FILE\n\t" + file.toString());
-			Desktop.getDesktop().open(file);
+			out.println("OPENING FILE\n\t" + dis.toString());
+			Desktop.getDesktop().open(dis);
 		}
 		catch(IOException e)
 		{
 			out.println(e.getMessage());
+			out.println(e.getStackTrace());
 		}
 	}
 	
 	public void saveFile(PrintStream out)
 	{
-		out.println("Saving the file '" + this.getTitle() + "'\n\tto path '" + this.getFile().toString() + "'");
+		out.println("Saving the file '" + this.getName() + "'\n\tto path '" + this.toString() + "'");
 	}
-
+	
+	
+	
+	
+	/* Filetype MEthods */
+	public String getFtype()
+	{
+		return ftype;
+	}
+	
+	
+	
+	
 	/* UUID Methods */
 	public String getUUID()
 	{

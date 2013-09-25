@@ -30,7 +30,7 @@ public class CabinetTest
 //		{
 //			out.println("TESTING NEW PDF FILE");
 //			out.println(i.getFile().toString());
-//			PdfFile test = new PdfFile(i.getFile().toString(), out);
+//			PdfItem test = new PdfItem(i.getFile().toString(), out);
 //			out.print("\n\n");
 //		}
 		
@@ -41,6 +41,6 @@ public class CabinetTest
 //		
 //		cab.saveAll(out);
 		
-		//PdfFile test = new PdfFile("C:\\Users\\Nick\\Desktop\\TestFldr\\cab\\Delbanco.pdf", out);
+		//PdfItem test = new PdfItem("C:\\Users\\Nick\\Desktop\\TestFldr\\cab\\Delbanco.pdf", out);
 	}
 }

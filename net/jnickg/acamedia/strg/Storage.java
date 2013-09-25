@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.PrintStream;
 import java.util.*;
 
-import net.jnickg.acamedia.fil.Article;
-import net.jnickg.acamedia.fil.Item;
-import net.jnickg.acamedia.fil.Text;
+import net.jnickg.acamedia.fil.*;
 
 public abstract class Storage
 		extends File
@@ -14,6 +12,7 @@ public abstract class Storage
 	// For implementation of Serializable interface
 	private static final long serialVersionUID = 1L;
 	
+	/* Variable Members */
 	private	Set<Item>				contents; // Items held directly inside the storage
 	private	Set<Folder>				folders; // All labels must be unique
 	
@@ -233,31 +232,16 @@ public abstract class Storage
 		//TODO Detect item type based on f and call correct sub
 		
 		// Create appropriate item
-		Item new1 = addText(f.getName(), f);
+		Item new1 = addPdfItem(f, f.getName());
 		
 		return new1;
 	}
 	
-	private Item addText(String tit, File loc)
+	private Item addPdfItem(File loc, String tit)
 	{
 		// Create the basic Text
-		Text new1 = new Text(tit, loc);
+		Item new1 = new PdfItem(loc, tit);
 		
-		
-		// Add to master list(s)
-		contents.add(new1);
-		
-		// Add to other maps
-		addToSetMap(uuidMap, new1, new1.getUUID());
-		addToSetMap(titleMap, new1, tit);
-		
-		// Return reference to new Text
-		return new1;
-	}
-	
-	private Item addArticle(String tit, File loc)
-	{
-		Article new1 = new Article(tit, loc);
 		
 		// Add to master list(s)
 		contents.add(new1);

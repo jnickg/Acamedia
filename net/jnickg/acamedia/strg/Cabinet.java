@@ -15,21 +15,9 @@ public class Cabinet
 		super(loc, lbl);
 	}
 	
-	@Override
-	public void saveAll(PrintStream out)
+	public void save(PrintStream out)
 	{
-		out.println("SAVING CABINET\n\n");
-		// Save own-level contents
-		for(Item i: this.getContents())
-		{
-			i.saveFile(out);
-		}
-		
-		// invoke save method for each folder
-		for(Folder f: this.getSubfolders())
-		{
-			f.saveAll(out);
-		}
+		this.saveAllSubs(out);
 	}
 
 }

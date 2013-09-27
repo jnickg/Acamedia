@@ -2,14 +2,14 @@ package net.jnickg.acamedia.strg;
 
 import java.io.File;
 import java.io.PrintStream;
-import java.util.*;
-
-import net.jnickg.acamedia.fil.Item;
 
 public class Cabinet
 		extends Storage
 {
 	
+	// For implementation of Serializable interface
+	private static final long serialVersionUID = 1L;
+
 	public Cabinet(File loc, String lbl)
 	{
 		super(loc, lbl);

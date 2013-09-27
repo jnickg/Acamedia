@@ -31,9 +31,9 @@ public abstract class Item
 			//	}
 
 	/* Constructors */
-	Item(File loc, String tit)
+	Item(File f)
 	{
-		super(loc, tit);
+		super(f.toString());
 		if(this.isFile())
 		{
 			String tmp = this.getName();

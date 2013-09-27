@@ -11,9 +11,9 @@ public class PdfItem
 	private	PdfReader	reader;
 	private	PdfWriter	writer;
 	
-	public PdfItem(File loc, String tit)
+	public PdfItem(File f)
 	{
-		super(loc, tit);
+		super(f);
 		if(this.getFtype().equalsIgnoreCase("PDF"))
 		{
 			//TODO make this do a PdfReader and get info

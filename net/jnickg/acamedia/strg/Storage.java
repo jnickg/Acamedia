@@ -244,8 +244,13 @@ public abstract class Storage
 			// allows for easy adding of new doc types.
 			if(ext.equalsIgnoreCase("application/pdf"))
 			{
-				out.println("It's a PDF: Attempting to make a new PDF Item...");
+				out.println("It's a PDF: Attempting to load the new PDF Item...");
 				new1 = addPdfItem(f, out);
+			}
+			else if (ext.equalsIgnoreCase("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+			{
+				out.println("It's a DOCX: If I knew how, I'd load it for you.");
+				new1 = null;
 			}
 			else
 			{

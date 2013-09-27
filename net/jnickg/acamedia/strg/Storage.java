@@ -20,20 +20,23 @@ public abstract class Storage
 	
 	private Map<String, Set<Item>>	uuidMap; // Allows key collisions by storing Items in a Set
 	private Map<String, Set<Item>>	titleMap;
+	private Map<String, Set<Item>>	tagMap;
 	
 	/* Constructors */
 	public Storage(File parent, String fldr)
 	{
+		// Make the file and 
 		super(parent, fldr);
 		if(!this.exists()) this.mkdir();
 
+		// Initialize guts
 		contents = new TreeSet<>();
-		
 		folders = new TreeSet<>();
 		
+		// Initialize maps
 		uuidMap = new HashMap<>();
-		
 		titleMap = new HashMap<>();
+		tagMap = new HashMap<>();
 	}
 	
 	
@@ -56,7 +59,7 @@ public abstract class Storage
 		// invoke save method for each folder
 		for(Folder f: folders)
 		{
-			f.saveAll(out);
+			f.saveAllSubs(out);
 		}
 	}
 	
@@ -66,7 +69,7 @@ public abstract class Storage
 		for(File f: guts)
 		{
 			if(f.isDirectory()) addSubfolder(f.getName());
-			else if(f.isFile()) addItem(f);
+			else if(f.isFile()) addItem(f, out);
 			
 		}
 	}
@@ -116,7 +119,7 @@ public abstract class Storage
 		{
 			out.println(indent + "  [Contents:]");
 			for(Item i: this.getContents())
-				out.println(indent + "    " + i.toString());
+				out.println(indent + "    " + i.getName());
 		}
 		if (this.hasSubfolders())
 		{
@@ -217,7 +220,7 @@ public abstract class Storage
 	public Folder addSubfolder(String lbl)
 	{	
 		// Create new folder with given properties
-		Folder nf = new Folder(this.getAbsoluteFile(), lbl);
+		Folder nf = new Folder(this, lbl);
 		
 		// Add new folder to appropriate maps
 		folders.add(nf);
@@ -229,32 +232,41 @@ public abstract class Storage
 	
 	
 	/* New Item Methods */
-	public Item addItem(File f)
+	public Item addItem(File f, PrintStream out)
 	{
+		out.println("\nAttempting to add new item: " + f.getName());
+		Item new1;
 		try
 		{
-			Item new1;
-			//TODO test if this works
 			String ext = Files.probeContentType(f.toPath());
-			if(ext.equalsIgnoreCase("PDF"))
-					new1 = addPdfItem(f);
+			out.println("filetype of " + f.getName() + "\n\t" + ext);
+			//TODO replace this with an enum that makes THIS more readable, and
+			// allows for easy adding of new doc types.
+			if(ext.equalsIgnoreCase("application/pdf"))
+			{
+				out.println("It's a PDF: Attempting to make a new PDF Item...");
+				new1 = addPdfItem(f, out);
+			}
 			else
-					new1 = null;
-			return new1;
-				
+			{
+				out.println("It didn't fit any Items I know of...");
+				new1 = null;
+			}	
 		}
 		catch(IOException e)
 		{
-			e.getMessage();
-			e.getStackTrace();
-			return null;
+			out.println(e.getMessage());
+			out.println(e.getStackTrace());
+			new1 = null;
 		}
+		return new1;
 	}
 	
-	private Item addPdfItem(File f)
+	private Item addPdfItem(File f, PrintStream out)
 	{
+		out.println(f.toString());
 		// Create the basic Text
-		Item new1 = new PdfItem(f, f.getName());
+		Item new1 = new PdfItem(f);
 		
 		
 		// Add to master list(s)

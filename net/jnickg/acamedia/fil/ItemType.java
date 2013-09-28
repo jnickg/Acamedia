@@ -1,12 +1,29 @@
 package net.jnickg.acamedia.fil;
 
+import java.io.File;
+
 public enum ItemType {
-	PDF("application/pdf", "application/x-pdf"),
-	DOCX("application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
-	DOC("application/msword"),
-	PPTX("application/vnd.openxmlformats-officedocument.presentationml.presentation"),
-	PPT("application/vnd.ms-powerpoint"),
-	TXT("text/plain","txt/rtf");
+	//The below are already supported
+	PDF("application/pdf", "application/x-pdf")
+	{
+		public Item makeInstance(File f)
+		{
+			return new PdfItem(f);
+		}
+	},
+	DOCX("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+	{
+		public Item makeInstance(File f)
+		{
+			return new DocxItem(f);
+		}
+		
+	};
+	//The below are not yet supported
+	//DOC("application/msword"),
+	//PPTX("application/vnd.openxmlformats-officedocument.presentationml.presentation"),
+	//PPT("application/vnd.ms-powerpoint"),
+	//TXT("text/plain","txt/rtf");
 
 	String [] mime;
 	
@@ -21,6 +38,7 @@ public enum ItemType {
 	}
 	
 	public static ItemType matchType(String t)
+		throws IllegalArgumentException
 	{
 		for(ItemType i: ItemType.values())
 		{
@@ -29,6 +47,8 @@ public enum ItemType {
 				if(s.equalsIgnoreCase(t)) return i;
 			}
 		}
-		return null;
+		throw new IllegalArgumentException("Unsupported file type " + t);
 	}
+	
+	public abstract Item makeInstance(File f);
 }

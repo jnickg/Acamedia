@@ -239,25 +239,10 @@ public abstract class Storage
 		try
 		{
 			String ext = Files.probeContentType(f.toPath());
-			out.println("filetype of " + f.getName() + "\n\t" + ext);
-			out.println(ItemType.matchType(ext));
-			//TODO replace this with an enum that makes THIS more readable, and
-			// allows for easy adding of new doc types.
-			if(ext.equalsIgnoreCase("application/pdf"))
-			{
-				out.println("It's a PDF: Attempting to load the new PDF Item...");
-				new1 = addPdfItem(f, out);
-			}
-			else if (ext.equalsIgnoreCase("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
-			{
-				out.println("It's a DOCX: If I knew how, I'd load it for you.");
-				new1 = null;
-			}
-			else
-			{
-				out.println("It didn't fit any Items I know of...");
-				new1 = null;
-			}	
+			ItemType it = ItemType.matchType(ext); 
+			out.println("filetype of " + f.getName() + ":\n\t\"" + ext + "\" aka \"" + it + "\"");
+			
+			new1 = it.makeInstance(f);	
 		}
 		catch(IOException e)
 		{
@@ -265,24 +250,12 @@ public abstract class Storage
 			out.println(e.getStackTrace());
 			new1 = null;
 		}
-		return new1;
-	}
-	
-	private Item addPdfItem(File f, PrintStream out)
-	{
-		out.println(f.toString());
-		// Create the basic Text
-		Item new1 = new PdfItem(f);
-		
-		
-		// Add to master list(s)
-		contents.add(new1);
-		
-		// Add to other maps
-		addToSetMap(uuidMap, new1, new1.getUUID());
-		addToSetMap(titleMap, new1, f.getName());
-		
-		// Return reference to new Text
+		catch(IllegalArgumentException e) // The filetype is not yet supported.
+		{
+			out.println(e.getMessage());
+			out.println(e.getStackTrace());
+			new1 = null;			
+		}
 		return new1;
 	}
 }

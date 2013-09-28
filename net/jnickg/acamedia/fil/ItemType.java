@@ -25,6 +25,9 @@ public enum ItemType {
 	//PPT("application/vnd.ms-powerpoint"),
 	//TXT("text/plain","txt/rtf");
 
+	
+	// Multipurpose Internet Mail Extension (MIME) Filetype as defined here
+	// http://www.ietf.org/rfc/rfc2045.txt
 	String [] mime;
 	
 	ItemType(String ... mime)
@@ -37,6 +40,7 @@ public enum ItemType {
 		return mime;
 	}
 	
+	// Used to match MIME type with its corresponding class
 	public static ItemType matchType(String t)
 		throws IllegalArgumentException
 	{
@@ -50,5 +54,8 @@ public enum ItemType {
 		throw new IllegalArgumentException("Unsupported file type " + t);
 	}
 	
+	// Since this enum is used to match MIME types with corresponding classes
+	// every ItemType instance must be able to make an instance of its
+	// corresponding class.
 	public abstract Item makeInstance(File f);
 }

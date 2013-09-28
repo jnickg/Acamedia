@@ -241,16 +241,21 @@ public abstract class Storage
 			String ext = Files.probeContentType(f.toPath());
 			ItemType it = ItemType.matchType(ext); 
 			out.println("filetype of " + f.getName() + ":\n\t\"" + ext + "\" aka \"" + it + "\"");
+			new1 = it.makeInstance(f);
 			
-			new1 = it.makeInstance(f);	
+			//TODO use new1 to employ addToSetMap method, to add new1 to maps
 		}
+		// Files.probeContentType failed due to
+		// an I/O error
 		catch(IOException e)
 		{
 			out.println(e.getMessage());
 			out.println(e.getStackTrace());
 			new1 = null;
 		}
-		catch(IllegalArgumentException e) // The filetype is not yet supported.
+		// The ItemType.matchType failed because
+		// the filetype is not yet supported.
+		catch(IllegalArgumentException e)
 		{
 			out.println(e.getMessage());
 			out.println(e.getStackTrace());

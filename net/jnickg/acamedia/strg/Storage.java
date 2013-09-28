@@ -240,6 +240,7 @@ public abstract class Storage
 		{
 			String ext = Files.probeContentType(f.toPath());
 			out.println("filetype of " + f.getName() + "\n\t" + ext);
+			out.println(ItemType.matchType(ext));
 			//TODO replace this with an enum that makes THIS more readable, and
 			// allows for easy adding of new doc types.
 			if(ext.equalsIgnoreCase("application/pdf"))

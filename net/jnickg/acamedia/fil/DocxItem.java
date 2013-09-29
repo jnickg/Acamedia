@@ -16,11 +16,16 @@ public class DocxItem extends Item {
 
 	public void pullMetadata(PrintStream out)
 	{
-		
+		out.println("Pulling metadata for a DOCX is not yet supported.");
 	}
 	
 	public String print()
 	{
-		return "DOCX item unsupported for now";
+		return print("");
+	}
+	
+	public String print(String indent)
+	{
+		return indent + "DOCX item unsupported for now";
 	}
 }

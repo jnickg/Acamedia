@@ -46,17 +46,30 @@ public class PdfItem
 		}
 	}
 	
+	public void pushMetadata(PrintStream out)
+	{
+		
+	}
+	
 	public String print()
+	{
+		return print("");
+	}
+	
+	public String print(String indent)
 	{
 		StringBuilder prnt = new StringBuilder();
 		
-		prnt.append(this.getName() + '\n');
+		prnt.append(this.getName());
 		
-		prnt.append("METADATA:\n");
-		Map<String, String> md = this.getMetadata();
-		for(String s: md.keySet())
+		if (this.hasMetadata())
 		{
-			prnt.append("\t" + s + ": " + md.get(s) + "\n");
+			prnt.append("\n" + indent + "METADATA:\n");
+			Map<String, String> md = this.getMetadata();
+			for(String s: md.keySet())
+			{
+				prnt.append(indent + '\t' + s + ": " + md.get(s) + "\n");
+			}
 		}
 		
 		return prnt.toString();

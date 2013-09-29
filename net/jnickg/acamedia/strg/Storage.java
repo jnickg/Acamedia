@@ -136,7 +136,7 @@ public abstract class Storage
 		{
 			out.println(indent + "  [Contents:]");
 			for(Item i: this.getContents())
-				out.println(indent + "    " + i.print());
+				out.println(indent + "    " + i.print(indent + "    "));
 		}
 		if (this.hasSubfolders())
 		{

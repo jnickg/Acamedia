@@ -57,7 +57,12 @@ public abstract class Item
 		return this.getName().compareTo(other.getName());
 	}
 	
-	public abstract String print();
+	public String print()
+	{
+		return print("");
+	}
+	
+	public abstract String print(String indent);
 	
 	
 	
@@ -85,6 +90,12 @@ public abstract class Item
 			if(!metadata.containsKey(s))
 				metadata.put(s, md.get(s));
 		}
+	}
+	
+	public Boolean hasMetadata()
+	{
+		if (metadata.isEmpty()) return false;
+		else return true;
 	}
 	
 	
@@ -164,6 +175,12 @@ public abstract class Item
 	public void saveFile(PrintStream out)
 	{
 		out.println("Saving the file '" + this.getName() + "'\n\tto path '" + this.toString() + "'");
+	}
+	
+	//TODO Complete this method
+	public static Item copyFile(Item thisItem)
+	{
+		return null;
 	}
 	
 	

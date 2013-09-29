@@ -18,9 +18,8 @@ public abstract class Storage
 	private	Set<Item>				contents; // Items held directly inside the storage
 	private	Set<Folder>				folders; // All labels must be unique
 	
-	private Map<String, Set<Item>>	uuidMap; // Allows key collisions by storing Items in a Set
 	private Map<String, Set<Item>>	titleMap;
-	private Map<String, Set<Item>>	tagMap;
+	private Map<String, Set<Item>>	metadataMap;
 	
 	/* Constructors */
 	public Storage(File parent, String fldr)
@@ -34,9 +33,8 @@ public abstract class Storage
 		folders = new TreeSet<>();
 		
 		// Initialize maps
-		uuidMap = new HashMap<>();
 		titleMap = new HashMap<>();
-		tagMap = new HashMap<>();
+		metadataMap = new HashMap<>();
 	}
 	
 	
@@ -245,6 +243,8 @@ public abstract class Storage
 			contents.add(new1);
 			
 			//TODO use new1 to employ addToSetMap method, to add new1 to maps
+			addToSetMap(titleMap, new1, new1.getName());
+			//addToSetMap(metadataMap, new1, disKey);
 		}
 		// Files.probeContentType failed due to
 		// an I/O error

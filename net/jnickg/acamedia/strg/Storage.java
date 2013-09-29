@@ -105,6 +105,25 @@ public abstract class Storage
 		}
 	}
 	
+	private void addToSetMap(Map<String, Set<Item>> disMap, Item disValue, Map<String, String> disKey)
+	{
+		for(String k: disKey.values())
+		{
+			if(!(disMap.containsKey(k)))
+			{
+				Set<Item> temp = new TreeSet<>();
+				temp.add(disValue);
+				disMap.put(k, temp);
+			}
+			else
+			{
+				Set<Item> temp = disMap.get(k);
+				temp.add(disValue);
+				disMap.put(k, temp);
+			}
+		}
+	}
+	
 	public void printAll(PrintStream out)
 	{
 		printAll(out, "");
@@ -244,7 +263,7 @@ public abstract class Storage
 			
 			//TODO use new1 to employ addToSetMap method, to add new1 to maps
 			addToSetMap(titleMap, new1, new1.getName());
-			//addToSetMap(metadataMap, new1, disKey);
+			addToSetMap(metadataMap, new1, new1.getMetadata());
 		}
 		// Files.probeContentType failed due to
 		// an I/O error

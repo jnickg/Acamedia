@@ -17,5 +17,7 @@ public class CabinetTest
 		cab.printAll(out);
 		cab.autoDetectSubs(out);
 		cab.printAll(out);
+		cab.initContents(out);
+		cab.printAll(out);
 	}
 }

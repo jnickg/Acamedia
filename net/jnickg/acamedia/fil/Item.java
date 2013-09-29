@@ -16,7 +16,6 @@ public abstract class Item
 	private			Map<String, String>	metadata; // stores the item's metadata for quick retrieval
 	private			Set<String> 		tags; // user-input tags
 	private			String				type; // user-input type of item that it is (unrelated to its concrete Class)
-	private			String				ftype; // file extension, if present
 	private 		String				uuid; // universally unique identifier (deprecated)
 	
 	private static final String notag = "none"; // used when there are no members for "tags"
@@ -34,11 +33,6 @@ public abstract class Item
 	Item(File f)
 	{
 		super(f.toString());
-		if(this.isFile())
-		{
-			String tmp = this.getName();
-			ftype = tmp.substring(tmp.lastIndexOf('.'));
-		}
 		
 		metadata = new HashMap<>();
 		
@@ -63,23 +57,34 @@ public abstract class Item
 		return this.getName().compareTo(other.getName());
 	}
 	
+	public abstract String print();
+	
 	
 	
 	
 	/* Metadata Methods */
+	public abstract void pullMetadata(PrintStream out);
+	
 	public Map<String, String> getMetadata()
 	{
 		return metadata;
 	}
 	
-	public void setMetadata(Map<String, String> metadata)
+	public void setMetadata(Map<String, String> md)
 	{
-		this.metadata = metadata;
+		for(String s: md.keySet())
+		{
+			metadata.put(s, md.get(s));
+		}
 	}
 	
-	public void addMetadata(Map<String, String> metadata)
+	public void addMetadata(Map<String, String> md)
 	{
-		metadata.putAll(metadata);
+		for(String s: md.keySet())
+		{
+			if(!metadata.containsKey(s))
+				metadata.put(s, md.get(s));
+		}
 	}
 	
 	
@@ -159,15 +164,6 @@ public abstract class Item
 	public void saveFile(PrintStream out)
 	{
 		out.println("Saving the file '" + this.getName() + "'\n\tto path '" + this.toString() + "'");
-	}
-	
-	
-	
-	
-	/* Filetype MEthods */
-	public String getFtype()
-	{
-		return ftype;
 	}
 	
 	

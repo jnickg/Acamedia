@@ -8,44 +8,57 @@ import com.itextpdf.text.pdf.*;
 public class PdfItem
 		extends Item
 {
+	// For implementation of Serializable interface
+	private static final long serialVersionUID = 1L;
+	
 	private	PdfReader	reader;
 	private	PdfWriter	writer;
 	
 	public PdfItem(File f)
 	{
 		super(f);
-		if(this.getFtype().equalsIgnoreCase("PDF"))
+	}
+	
+	public void pullMetadata(PrintStream out)
+	{
+		try
 		{
-			//TODO make this do a PdfReader and get info
+			reader = new PdfReader(this.toString());
+			Map<String, String> info = reader.getInfo();
+			this.addMetadata(info);
 		}
-//		try
-//		{
-//			out.println("attempting to make PdfReader...");
-//			reader = new PdfReader(filepath);
-//			out.println("attempting to get info...");
-//			Map<String, String> info = reader.getInfo();
-//			for(String s: info.keySet())
-//			{
-//				out.println(s + ": " + info.get(s));
-//			}
-//			out.println(reader.getPdfVersion());
-//		}
-//		catch(Exception e)
-//		{
-//			out.println("SOMETHING WENT WRONG!!! EXCEPTION");
-//			out.println(e.getMessage());
-//			out.println(e.getLocalizedMessage());
-//			out.println(e.getCause().toString());
-//			out.println(e.getStackTrace().toString());
-//		}
-//		catch(Error e)
-//		{
-//			out.println("SOMETHING WENT WRONG!!! ERROR");
-//			out.println(e.getMessage());
-//			out.println(e.getLocalizedMessage());
-//			out.println(e.getCause().toString());
-//			out.println(e.getStackTrace().toString());
-//
-//		}
+		catch(Exception e)
+		{
+			out.println("SOMETHING WENT WRONG!!! EXCEPTION");
+			out.println(e.getMessage());
+			out.println(e.getLocalizedMessage());
+			out.println(e.getCause().toString());
+			out.println(e.getStackTrace().toString());
+		}
+		catch(Error e)
+		{
+			out.println("SOMETHING WENT WRONG!!! ERROR");
+			out.println(e.getMessage());
+			out.println(e.getLocalizedMessage());
+			out.println(e.getCause().toString());
+			out.println(e.getStackTrace().toString());
+
+		}
+	}
+	
+	public String print()
+	{
+		StringBuilder prnt = new StringBuilder();
+		
+		prnt.append(this.getName() + '\n');
+		
+		prnt.append("METADATA:\n");
+		Map<String, String> md = this.getMetadata();
+		for(String s: md.keySet())
+		{
+			prnt.append("\t" + s + ": " + md.get(s) + "\n");
+		}
+		
+		return prnt.toString();
 	}
 }

@@ -119,7 +119,7 @@ public abstract class Storage
 		{
 			out.println(indent + "  [Contents:]");
 			for(Item i: this.getContents())
-				out.println(indent + "    " + i.getName());
+				out.println(indent + "    " + i.print());
 		}
 		if (this.hasSubfolders())
 		{
@@ -242,6 +242,7 @@ public abstract class Storage
 			ItemType it = ItemType.matchType(ext); 
 			out.println("filetype of " + f.getName() + ":\n\t\"" + ext + "\" aka \"" + it + "\"");
 			new1 = it.makeInstance(f);
+			contents.add(new1);
 			
 			//TODO use new1 to employ addToSetMap method, to add new1 to maps
 		}
@@ -262,5 +263,13 @@ public abstract class Storage
 			new1 = null;			
 		}
 		return new1;
+	}
+	
+	public void initContents(PrintStream out)
+	{
+		for(Item i: contents)
+		{
+			i.pullMetadata(out);
+		}
 	}
 }

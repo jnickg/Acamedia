@@ -68,7 +68,6 @@ public abstract class Storage
 		{
 			if(f.isDirectory()) addSubfolder(f.getName());
 			else if(f.isFile()) addItem(f, out);
-			
 		}
 	}
 	
